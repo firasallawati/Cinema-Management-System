@@ -1,0 +1,16 @@
+//
+// Created by firas on 15/06/2026.
+//
+
+#ifndef T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H
+#define T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H
+
+
+
+class movie_schedule {
+
+};
+
+
+
+#endif //T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H

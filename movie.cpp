@@ -8,53 +8,98 @@ using namespace std;
 
 Movie::Movie() {
     title_ = "";
+    description_ = "";
     genre_ = "";
-    date_ = "";
-    time_ = "";
+    certificate_ = "";
+    runningTime_ = 0;
+    mainStar_ = "";
+    distributor_ = "";
+    releaseDate_ = "";
 }
 
-Movie::Movie(string title, string genre, string date, string time) {
+Movie::Movie(string title, string description, string genre, string certificate,
+             int runningTime, string mainStar, string distributor, string releaseDate) {
     title_ = title;
+    description_ = description;
     genre_ = genre;
-    date_ = date;
-    time_ = time;
+    certificate_ = certificate;
+    runningTime_ = runningTime;
+    mainStar_ = mainStar;
+    distributor_ = distributor;
+    releaseDate_ = releaseDate;
 }
 
 string Movie::GetTitle() {
     return title_;
 }
 
+string Movie::GetDescription() {
+    return description_;
+}
+
 string Movie::GetGenre() {
     return genre_;
 }
 
-string Movie::GetDate() {
-    return date_;
+string Movie::GetCertificate() {
+    return certificate_;
 }
 
-string Movie::GetTime() {
-    return time_;
+int Movie::GetRunningTime() {
+    return runningTime_;
+}
+
+string Movie::GetMainStar() {
+    return mainStar_;
+}
+
+string Movie::GetDistributor() {
+    return distributor_;
+}
+
+string Movie::GetReleaseDate() {
+    return releaseDate_;
 }
 
 void Movie::SetTitle(string title) {
     title_ = title;
 }
 
+void Movie::SetDescription(string description) {
+    description_ = description;
+}
+
 void Movie::SetGenre(string genre) {
     genre_ = genre;
 }
 
-void Movie::SetDate(string date) {
-    date_ = date;
+void Movie::SetCertificate(string certificate) {
+    certificate_ = certificate;
 }
 
-void Movie::SetTime(string time) {
-    time_ = time;
+void Movie::SetRunningTime(int runningTime) {
+    runningTime_ = runningTime;
+}
+
+void Movie::SetMainStar(string mainStar) {
+    mainStar_ = mainStar;
+}
+
+void Movie::SetDistributor(string distributor) {
+    distributor_ = distributor;
+}
+
+void Movie::SetReleaseDate(string releaseDate) {
+    releaseDate_ = releaseDate;
 }
 
 void Movie::DisplayMovie() {
     cout << "Title: " << title_ << endl;
+    cout << "Description: " << description_ << endl;
     cout << "Genre: " << genre_ << endl;
-    cout << "Date: " << date_ << endl;
-    cout << "Time: " << time_ << endl;
+    cout << "Certificate: " << certificate_ << endl;
+    cout << "Running Time: " << runningTime_ << " minutes" << endl;
+    cout << "Main Star: " << mainStar_ << endl;
+    cout << "Distributor: " << distributor_ << endl;
+    cout << "Release Date: " << releaseDate_ << endl;
 }

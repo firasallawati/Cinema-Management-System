@@ -11,4 +11,6 @@ add_executable(T0466146_453_Coursework_Real main.cpp
         booking.cpp
         booking.h
         screen.cpp
-        screen.h)
+        screen.h
+        movie_schedule.cpp
+        movie_schedule.h)

@@ -6,25 +6,32 @@
 #define T0466146_453_COURSEWORK_REAL_SCREEN_H
 
 
+#include <iostream>
 #include <string>
 using namespace std;
 
 class Screen {
 private:
     string screen_id_;
-    int capacity_;
-    string facilities_;   // e.g. "Standard", "IMAX, Seat service"
+    string current_movie_;
+    int max_capacity_;
+    int available_seats_;
+    string facilities_; // e.g. "Standard", "IMAX, Seat service"
 
 public:
     Screen();
-    Screen(string screen_id, int capacity, string facilities);
+    Screen(string screen_id, string current_movie, int max_capacity, int available_seats, string facilities);
 
     string GetScreenId();
-    int GetCapacity();
+    string GetCurrentMovie();
+    int GetMaxCapacity();
+    int GetAvailableSeats();
     string GetFacilities();
 
     void SetScreenId(string screen_id);
-    void SetCapacity(int capacity);
+    void SetCurrentMovie(string current_movie);
+    void SetMaxCapacity(int max_capacity);
+    void SetAvailableSeats(int available_seats);
     void SetFacilities(string facilities);
 
     void DisplayScreen();
