@@ -7,4 +7,8 @@ add_executable(T0466146_453_Coursework_Real main.cpp
         movie.cpp
         movie.h
         payment_details.cpp
-        payment_details.h)
+        payment_details.h
+        booking.cpp
+        booking.h
+        screen.cpp
+        screen.h)
