@@ -1,5 +1,3 @@
-
-
 | Assessment Details | Please Complete All Details                                   |
 | ------------------ | ------------------------------------------------------------- |
 | Group              | A                                                             |
@@ -150,6 +148,22 @@ The purpose of the program is to be designed for easy creation of ticket booking
 
 ---
 
+### Testing
+
+---
+
+**Test Table:**
+
+
+
+**Annotation Screenshots:**
+
+
+
+**Techincal Elements:**
+
+---
+
 ### Appendix Code
 
 ---
@@ -188,8 +202,6 @@ void DisplayMovie();
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_MOVIE_H
-
-
 
 **movie.cpp:**
 
@@ -251,8 +263,6 @@ void Movie::DisplayMovie() {
     cout << "Time: " << time_ << endl;
 }
 
-
-
 **payment_details.h:**
 
 #ifndef T0466146_453_COURSEWORK_REAL_PAYMENT_DETAILS_H
@@ -291,8 +301,6 @@ void DisplayPaymentDetails();
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_PAYMENT_DETAILS_H
-
-
 
 **payment_details.cpp:**
 
@@ -369,8 +377,6 @@ void PaymentDetails::DisplayPaymentDetails() {
     }
 }
 
-
-
 **booking.h:**
 
 #ifndef T0466146_453_COURSEWORK_REAL_BOOKING_H
@@ -429,8 +435,6 @@ void DisplayBooking();
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_BOOKING_H
-
-
 
 **booking.cpp:**
 
@@ -562,8 +566,6 @@ void Booking::DisplayBooking() {
     cout << "Total cost: " << total_cost_ << " GBP" << endl;
 }
 
-
-
 **main.cpp:**
 
 #include <iostream>  
@@ -674,38 +676,40 @@ if (payment_method == "card") {
     string cvc_number;  
     string expiry_date;  
 
-    cout << "Enter card number: ";  
-    cin >> card_number;  
+cout << "Enter card number: ";  
+cin >> card_number;  
 
-    cout << "Enter CVC number: ";  
-    cin >> cvc_number;  
+cout << "Enter CVC number: ";  
+cin >> cvc_number;  
 
-    cout << "Enter expiry date (mm/yy): ";  
-    cin >> expiry_date;  
+cout << "Enter expiry date (mm/yy): ";  
+cin >> expiry_date;  
 
-    payment_details.SetPaymentMethod("card");  
-    payment_details.SetCardNumber(card_number);  
-    payment_details.SetCvcNumber(cvc_number);  
-    payment_details.SetExpiryDate(expiry_date);  
-    payment_details.SetCashPaid(0.0);  
+payment_details.SetPaymentMethod("card");  
+payment_details.SetCardNumber(card_number);  
+payment_details.SetCvcNumber(cvc_number);  
+payment_details.SetExpiryDate(expiry_date);  
+payment_details.SetCashPaid(0.0);  
+
 } else {  
     double cash_paid;  
     cout << "Enter amount of cash paid: ";  
     cin >> cash_paid;  
 
-    while (cash_paid < total_cost) {  
-        cout << "Cash is less than total cost. Enter amount again: ";  
-        cin >> cash_paid;  
-    }  
+while (cash_paid < total_cost) {  
+    cout << "Cash is less than total cost. Enter amount again: ";  
+    cin >> cash_paid;  
+}  
 
-    double change = cash_paid - total_cost;  
-    cout << "Change to give customer: " << change << " GBP\n";  
+double change = cash_paid - total_cost;  
+cout << "Change to give customer: " << change << " GBP\n";  
 
-    payment_details.SetPaymentMethod("cash");  
-    payment_details.SetCashPaid(cash_paid);  
-    payment_details.SetCardNumber("");  
-    payment_details.SetCvcNumber("");  
-    payment_details.SetExpiryDate("");  
+payment_details.SetPaymentMethod("cash");  
+payment_details.SetCashPaid(cash_paid);  
+payment_details.SetCardNumber("");  
+payment_details.SetCvcNumber("");  
+payment_details.SetExpiryDate("");  
+
 }  
 
 Booking booking;  
