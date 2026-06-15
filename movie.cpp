@@ -2,6 +2,7 @@
 // Created by firas on 12/06/2026.
 //
 
+#include <iostream>
 #include "movie.h"
 
 using namespace std;
@@ -11,22 +12,22 @@ Movie::Movie() {
     description_ = "";
     genre_ = "";
     certificate_ = "";
-    runningTime_ = 0;
-    mainStar_ = "";
+    running_time_ = 0;
+    main_star_ = "";
     distributor_ = "";
-    releaseDate_ = "";
+    release_date_ = "";
 }
 
 Movie::Movie(string title, string description, string genre, string certificate,
-             int runningTime, string mainStar, string distributor, string releaseDate) {
+             int running_time, string main_star, string distributor, string release_date) {
     title_ = title;
     description_ = description;
     genre_ = genre;
     certificate_ = certificate;
-    runningTime_ = runningTime;
-    mainStar_ = mainStar;
+    running_time_ = running_time;
+    main_star_ = main_star;
     distributor_ = distributor;
-    releaseDate_ = releaseDate;
+    release_date_ = release_date;
 }
 
 string Movie::GetTitle() {
@@ -46,11 +47,11 @@ string Movie::GetCertificate() {
 }
 
 int Movie::GetRunningTime() {
-    return runningTime_;
+    return running_time_;
 }
 
 string Movie::GetMainStar() {
-    return mainStar_;
+    return main_star_;
 }
 
 string Movie::GetDistributor() {
@@ -58,7 +59,7 @@ string Movie::GetDistributor() {
 }
 
 string Movie::GetReleaseDate() {
-    return releaseDate_;
+    return release_date_;
 }
 
 void Movie::SetTitle(string title) {
@@ -77,20 +78,20 @@ void Movie::SetCertificate(string certificate) {
     certificate_ = certificate;
 }
 
-void Movie::SetRunningTime(int runningTime) {
-    runningTime_ = runningTime;
+void Movie::SetRunningTime(int running_time) {
+    running_time_ = running_time;
 }
 
-void Movie::SetMainStar(string mainStar) {
-    mainStar_ = mainStar;
+void Movie::SetMainStar(string main_star) {
+    main_star_ = main_star;
 }
 
 void Movie::SetDistributor(string distributor) {
     distributor_ = distributor;
 }
 
-void Movie::SetReleaseDate(string releaseDate) {
-    releaseDate_ = releaseDate;
+void Movie::SetReleaseDate(string release_date) {
+    release_date_ = release_date;
 }
 
 void Movie::DisplayMovie() {
@@ -98,8 +99,8 @@ void Movie::DisplayMovie() {
     cout << "Description: " << description_ << endl;
     cout << "Genre: " << genre_ << endl;
     cout << "Certificate: " << certificate_ << endl;
-    cout << "Running Time: " << runningTime_ << " minutes" << endl;
-    cout << "Main Star: " << mainStar_ << endl;
+    cout << "Running Time: " << running_time_ << " minutes" << endl;
+    cout << "Main Star: " << main_star_ << endl;
     cout << "Distributor: " << distributor_ << endl;
-    cout << "Release Date: " << releaseDate_ << endl;
+    cout << "Release Date: " << release_date_ << endl;
 }

@@ -16,15 +16,15 @@ private:
     string description_;
     string genre_;
     string certificate_;
-    int runningTime_;
-    string mainStar_;
+    int running_time_;
+    string main_star_;
     string distributor_;
-    string releaseDate_;
+    string release_date_;
 
 public:
     Movie();
     Movie(string title, string description, string genre, string certificate,
-          int runningTime, string mainStar, string distributor, string releaseDate);
+          int running_time, string main_star, string distributor, string release_date);
 
     string GetTitle();
     string GetDescription();
@@ -39,12 +39,14 @@ public:
     void SetDescription(string description);
     void SetGenre(string genre);
     void SetCertificate(string certificate);
-    void SetRunningTime(int runningTime);
-    void SetMainStar(string mainStar);
+    void SetRunningTime(int running_time);
+    void SetMainStar(string main_star);
     void SetDistributor(string distributor);
-    void SetReleaseDate(string releaseDate);
+    void SetReleaseDate(string release_date);
 
     void DisplayMovie();
 };
+
+
 
 #endif //T0466146_453_COURSEWORK_REAL_MOVIE_H
