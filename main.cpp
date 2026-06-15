@@ -46,7 +46,7 @@ int main() {
 
     while (choice != 8) {
         cout << endl;
-        cout << "===== CINEMA BOOKING SYSTEM =====" << endl;
+        cout << "    Cinema Booking System    " << endl;
         cout << "1. Add Booking" << endl;
         cout << "2. View All Bookings" << endl;
         cout << "3. Search Bookings" << endl;

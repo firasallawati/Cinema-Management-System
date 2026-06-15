@@ -117,23 +117,56 @@ int InputHandler::TimeToMinutes(const string& time_text) {
 }
 string InputHandler::GetValidTime(const string& prompt) {
     string time_text;
+    int earliest_time = (10 * 60) + 15; // 10:15
+    int latest_time = (23 * 60) + 30;   // 23:30
+
     while (true) {
         cout << prompt;
         getline(cin, time_text);
-        if (IsValidTimeFormat(time_text)) {
-            return time_text;
+
+        if (!IsValidTimeFormat(time_text)) {
+            cout << "Invalid time format. Please use HH:MM." << endl;
+            continue;
         }
-        cout << "Invalid time format. Please use HH:MM." << endl;
+
+        int time_in_minutes = TimeToMinutes(time_text);
+
+        if (time_in_minutes < earliest_time || time_in_minutes > latest_time) {
+            cout << "Invalid time. Time must be between 10:15 and 23:30." << endl;
+            continue;
+        }
+
+        return time_text;
     }
 }
+
 string InputHandler::GetValidEndTimeAfterStart(const string& prompt, const string& start_time) {
     string end_time;
+    int latest_time = (23 * 60) + 30; // 23:30
+
     while (true) {
-        end_time = GetValidTime(prompt);
-        if (TimeToMinutes(end_time) > TimeToMinutes(start_time)) {
-            return end_time;
+        cout << prompt;
+        getline(cin, end_time);
+
+        if (!IsValidTimeFormat(end_time)) {
+            cout << "Invalid time format. Please use HH:MM." << endl;
+            continue;
         }
-        cout << "End time must be later than start time. Please enter a valid end time." << endl;
+
+        int end_minutes = TimeToMinutes(end_time);
+        int start_minutes = TimeToMinutes(start_time);
+
+        if (end_minutes > latest_time) {
+            cout << "Invalid end time. The cinema closes at 23:30." << endl;
+            continue;
+        }
+
+        if (end_minutes <= start_minutes) {
+            cout << "End time must be later than start time. Please enter a valid end time." << endl;
+            continue;
+        }
+
+        return end_time;
     }
 }
 string InputHandler::GetValidPaymentMethod(const string& prompt) {
