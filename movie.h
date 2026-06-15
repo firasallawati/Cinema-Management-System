@@ -26,14 +26,14 @@ public:
     Movie(string title, string description, string genre, string certificate,
           int running_time, string main_star, string distributor, string release_date);
 
-    string GetTitle();
-    string GetDescription();
-    string GetGenre();
-    string GetCertificate();
-    int GetRunningTime();
-    string GetMainStar();
-    string GetDistributor();
-    string GetReleaseDate();
+    string GetTitle() const;
+    string GetDescription() const;
+    string GetGenre() const;
+    string GetCertificate() const;
+    int GetRunningTime() const;
+    string GetMainStar() const;
+    string GetDistributor() const;
+    string GetReleaseDate() const;
 
     void SetTitle(string title);
     void SetDescription(string description);
@@ -44,7 +44,7 @@ public:
     void SetDistributor(string distributor);
     void SetReleaseDate(string release_date);
 
-    void DisplayMovie();
+    void DisplayMovie() const;
 };
 
 

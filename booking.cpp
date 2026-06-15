@@ -34,43 +34,43 @@ Booking::Booking(string customer_name, Movie movie, string booking_date, string 
     payment_details_ = payment_details;
 }
 
-string Booking::GetCustomerName() {
+string Booking::GetCustomerName() const {
     return customer_name_;
 }
 
-Movie Booking::GetMovie() {
+Movie Booking::GetMovie() const {
     return movie_;
 }
 
-string Booking::GetBookingDate() {
+string Booking::GetBookingDate() const {
     return booking_date_;
 }
 
-string Booking::GetBookingTime() {
+string Booking::GetBookingTime() const {
     return booking_time_;
 }
 
-int Booking::GetAdultTickets() {
+int Booking::GetAdultTickets() const {
     return adult_tickets_;
 }
 
-int Booking::GetChildTickets() {
+int Booking::GetChildTickets() const {
     return child_tickets_;
 }
 
-int Booking::GetStudentTickets() {
+int Booking::GetStudentTickets() const {
     return student_tickets_;
 }
 
-int Booking::GetSeniorTickets() {
+int Booking::GetSeniorTickets() const {
     return senior_tickets_;
 }
 
-double Booking::GetTotalCost() {
+double Booking::GetTotalCost() const {
     return total_cost_;
 }
 
-PaymentDetails Booking::GetPaymentDetails() {
+PaymentDetails Booking::GetPaymentDetails() const {
     return payment_details_;
 }
 
@@ -114,11 +114,11 @@ void Booking::SetPaymentDetails(PaymentDetails payment_details) {
     payment_details_ = payment_details;
 }
 
-int Booking::GetTotalTickets() {
+int Booking::GetTotalTickets() const {
     return adult_tickets_ + child_tickets_ + student_tickets_ + senior_tickets_;
 }
 
-void Booking::DisplayBooking() {
+void Booking::DisplayBooking() const {
     cout << "Customer Name: " << customer_name_ << endl;
     cout << "Movie: " << movie_.GetTitle() << endl;
     cout << "Date: " << booking_date_ << endl;

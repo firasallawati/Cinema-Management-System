@@ -30,35 +30,35 @@ Movie::Movie(string title, string description, string genre, string certificate,
     release_date_ = release_date;
 }
 
-string Movie::GetTitle() {
+string Movie::GetTitle() const {
     return title_;
 }
 
-string Movie::GetDescription() {
+string Movie::GetDescription() const {
     return description_;
 }
 
-string Movie::GetGenre() {
+string Movie::GetGenre() const {
     return genre_;
 }
 
-string Movie::GetCertificate() {
+string Movie::GetCertificate() const {
     return certificate_;
 }
 
-int Movie::GetRunningTime() {
+int Movie::GetRunningTime() const {
     return running_time_;
 }
 
-string Movie::GetMainStar() {
+string Movie::GetMainStar() const {
     return main_star_;
 }
 
-string Movie::GetDistributor() {
+string Movie::GetDistributor() const {
     return distributor_;
 }
 
-string Movie::GetReleaseDate() {
+string Movie::GetReleaseDate() const {
     return release_date_;
 }
 
@@ -94,7 +94,7 @@ void Movie::SetReleaseDate(string release_date) {
     release_date_ = release_date;
 }
 
-void Movie::DisplayMovie() {
+void Movie::DisplayMovie() const {
     cout << "Title: " << title_ << endl;
     cout << "Description: " << description_ << endl;
     cout << "Genre: " << genre_ << endl;

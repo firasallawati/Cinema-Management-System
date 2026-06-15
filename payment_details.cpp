@@ -24,23 +24,23 @@ PaymentDetails::PaymentDetails(string payment_method, string card_number, string
     cash_paid_ = cash_paid;
 }
 
-string PaymentDetails::GetPaymentMethod() {
+string PaymentDetails::GetPaymentMethod() const  {
     return payment_method_;
 }
 
-string PaymentDetails::GetCardNumber() {
+string PaymentDetails::GetCardNumber() const {
     return card_number_;
 }
 
-string PaymentDetails::GetCvcNumber() {
+string PaymentDetails::GetCvcNumber() const {
     return cvc_number_;
 }
 
-string PaymentDetails::GetExpiryDate() {
+string PaymentDetails::GetExpiryDate() const {
     return expiry_date_;
 }
 
-double PaymentDetails::GetCashPaid() {
+double PaymentDetails::GetCashPaid() const {
     return cash_paid_;
 }
 
@@ -64,7 +64,7 @@ void PaymentDetails::SetCashPaid(double cash_paid) {
     cash_paid_ = cash_paid;
 }
 
-void PaymentDetails::DisplayPaymentDetails() {
+void PaymentDetails::DisplayPaymentDetails() const {
     cout << "Payment method: " << payment_method_ << endl;
 
     if (payment_method_ == "card" || payment_method_ == "Card") {

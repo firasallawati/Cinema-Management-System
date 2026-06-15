@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <string>
 #include "movie.h"
 #include "screen.h"
 #include "payment_details.h"
@@ -8,30 +7,26 @@
 #include "booking_manager.h"
 #include "movie_schedule.h"
 #include "schedule_manager.h"
+#include "input_handler.h"
 
 using namespace std;
 
 double CalculateBookingCost(int adult_tickets, int child_tickets, int student_tickets, int senior_tickets) {
-    double adult_price = 9.50;
-    double child_price = 5.50;
-    double student_price = 7.00;
-    double senior_price = 6.50;
-
-    return (adult_tickets * adult_price) +
-           (child_tickets * child_price) +
-           (student_tickets * student_price) +
-           (senior_tickets * senior_price);
+    return (adult_tickets * 9.50) +
+           (child_tickets * 5.50) +
+           (student_tickets * 7.00) +
+           (senior_tickets * 6.50);
 }
 
-void DisplayBookingSearchResults(vector<Booking> results) {
-    if (results.empty()) {
+void DisplayBookingResults(const vector<Booking>& bookings) {
+    if (bookings.empty()) {
         cout << "No matching bookings found." << endl;
         return;
     }
 
-    for (int i = 0; i < results.size(); i++) {
+    for (int i = 0; i < bookings.size(); i++) {
         cout << "Result " << i + 1 << ":" << endl;
-        results[i].DisplayBooking();
+        bookings[i].DisplayBooking();
         cout << endl;
     }
 }
@@ -51,7 +46,7 @@ int main() {
 
     while (choice != 8) {
         cout << endl;
-        cout << "    Cinema Booking System     " << endl;
+        cout << "===== CINEMA BOOKING SYSTEM =====" << endl;
         cout << "1. Add Booking" << endl;
         cout << "2. View All Bookings" << endl;
         cout << "3. Search Bookings" << endl;
@@ -60,95 +55,75 @@ int main() {
         cout << "6. Save Data" << endl;
         cout << "7. Load Data" << endl;
         cout << "8. Exit" << endl;
-        cout << "Enter choice: ";
-        cin >> choice;
-        cin.ignore();
+
+        choice = InputHandler::GetIntInRange("Enter choice: ", 1, 8);
 
         if (choice == 1) {
-            string customer_name;
-            string movie_title;
-            string booking_day;
-            string booking_time;
-            int adult_tickets;
-            int child_tickets;
-            int student_tickets;
-            int senior_tickets;
-            string payment_method;
+            string customer_name = InputHandler::GetNonEmptyString("Enter customer name: ");
+            string movie_title = InputHandler::GetNonEmptyString("Enter movie title: ");
+            string booking_day = InputHandler::GetValidDay("Enter booking day (Thursday to Wednesday): ");
+            string booking_time = InputHandler::GetValidTime("Enter booking time (HH:MM): ");
 
-            cout << "Enter customer name: ";
-            getline(cin, customer_name);
+            int adult_tickets = InputHandler::GetNonNegativeInt("Enter number of adult tickets: ");
+            int child_tickets = InputHandler::GetNonNegativeInt("Enter number of child tickets: ");
+            int student_tickets = InputHandler::GetNonNegativeInt("Enter number of student tickets: ");
+            int senior_tickets = InputHandler::GetNonNegativeInt("Enter number of senior tickets: ");
 
-            cout << "Enter movie title: ";
-            getline(cin, movie_title);
-
-            cout << "Enter booking day (Thursday to Wednesday): ";
-            getline(cin, booking_day);
-
-            cout << "Enter booking time (HH:MM): ";
-            getline(cin, booking_time);
-
-            cout << "Enter number of adult tickets: ";
-            cin >> adult_tickets;
-
-            cout << "Enter number of child tickets: ";
-            cin >> child_tickets;
-
-            cout << "Enter number of student tickets: ";
-            cin >> student_tickets;
-
-            cout << "Enter number of senior tickets: ";
-            cin >> senior_tickets;
-            cin.ignore();
+            while (adult_tickets + child_tickets + student_tickets + senior_tickets == 0) {
+                cout << "At least one ticket must be booked." << endl;
+                adult_tickets = InputHandler::GetNonNegativeInt("Enter number of adult tickets: ");
+                child_tickets = InputHandler::GetNonNegativeInt("Enter number of child tickets: ");
+                student_tickets = InputHandler::GetNonNegativeInt("Enter number of student tickets: ");
+                senior_tickets = InputHandler::GetNonNegativeInt("Enter number of senior tickets: ");
+            }
 
             cout << "Choose a screen:" << endl;
             for (int i = 0; i < screens.size(); i++) {
-                cout << i + 1 << ". " << screens[i].GetScreenId()
-                     << " | Capacity: " << screens[i].GetAvailableSeats()
-                     << " | Facilities: " << screens[i].GetFacilities() << endl;
+                cout << i + 1 << ". "
+                     << screens[i].GetScreenId()
+                     << " | Available Seats: " << screens[i].GetAvailableSeats()
+                     << " | Facilities: " << screens[i].GetFacilities()
+                     << endl;
             }
 
-            int screen_choice;
-            cout << "Enter screen number: ";
-            cin >> screen_choice;
-            cin.ignore();
+            int screen_choice = InputHandler::GetIntInRange("Enter screen number: ", 1, screens.size());
 
-            if (screen_choice < 1 || screen_choice > screens.size()) {
-                cout << "Invalid screen choice." << endl;
-                continue;
+            int total_tickets = adult_tickets + child_tickets + student_tickets + senior_tickets;
+            while (total_tickets > screens[screen_choice - 1].GetAvailableSeats()) {
+                cout << "Not enough seats available on this screen." << endl;
+                cout << "Available seats: " << screens[screen_choice - 1].GetAvailableSeats() << endl;
+
+                adult_tickets = InputHandler::GetNonNegativeInt("Re-enter number of adult tickets: ");
+                child_tickets = InputHandler::GetNonNegativeInt("Re-enter number of child tickets: ");
+                student_tickets = InputHandler::GetNonNegativeInt("Re-enter number of student tickets: ");
+                senior_tickets = InputHandler::GetNonNegativeInt("Re-enter number of senior tickets: ");
+
+                total_tickets = adult_tickets + child_tickets + student_tickets + senior_tickets;
             }
-
-            Movie movie;
-            movie.SetTitle(movie_title);
 
             double total_cost = CalculateBookingCost(adult_tickets, child_tickets, student_tickets, senior_tickets);
+            cout << "Total booking cost: " << total_cost << endl;
+
+            string payment_method = InputHandler::GetValidPaymentMethod("Enter payment method (Cash/Card): ");
 
             PaymentDetails payment_details;
-            cout << "Enter payment method (Cash/Card): ";
-            getline(cin, payment_method);
             payment_details.SetPaymentMethod(payment_method);
 
-            if (payment_method == "Card" || payment_method == "card") {
-                string card_number;
-                string cvc_number;
-                string expiry_date;
-
-                cout << "Enter card number: ";
-                getline(cin, card_number);
-                cout << "Enter CVC number: ";
-                getline(cin, cvc_number);
-                cout << "Enter expiry date: ";
-                getline(cin, expiry_date);
+            if (payment_method == "Card") {
+                string card_number = InputHandler::GetNonEmptyString("Enter card number: ");
+                string cvc_number = InputHandler::GetNonEmptyString("Enter CVC number: ");
+                string expiry_date = InputHandler::GetNonEmptyString("Enter expiry date: ");
 
                 payment_details.SetCardNumber(card_number);
                 payment_details.SetCvcNumber(cvc_number);
                 payment_details.SetExpiryDate(expiry_date);
-            } else if (payment_method == "Cash" || payment_method == "cash") {
-                double cash_paid;
-                cout << "Enter cash paid: ";
-                cin >> cash_paid;
-                cin.ignore();
+            } else {
+                double cash_paid = InputHandler::GetDoubleAtLeast("Enter cash paid: ", total_cost);
                 payment_details.SetCashPaid(cash_paid);
             }
+
+            Movie movie;
+            movie.SetTitle(movie_title);
 
             Booking booking(
                 customer_name,
@@ -166,14 +141,13 @@ int main() {
             if (booking_manager.CanAddBooking(screens[screen_choice - 1], booking)) {
                 booking_manager.AddBooking(booking);
 
-                int remaining_seats = screens[screen_choice - 1].GetAvailableSeats() - booking.GetTotalTickets();
-                screens[screen_choice - 1].SetAvailableSeats(remaining_seats);
+                int updated_seats = screens[screen_choice - 1].GetAvailableSeats() - booking.GetTotalTickets();
+                screens[screen_choice - 1].SetAvailableSeats(updated_seats);
                 screens[screen_choice - 1].SetCurrentMovie(movie_title);
 
                 cout << "Booking added successfully." << endl;
-                cout << "Total cost: " << total_cost << endl;
             } else {
-                cout << "Booking could not be added. Check day or seating capacity." << endl;
+                cout << "Booking could not be added. Check booking rules or screen capacity." << endl;
             }
         }
 
@@ -182,60 +156,32 @@ int main() {
         }
 
         else if (choice == 3) {
-            int search_choice;
             cout << "Search bookings by:" << endl;
             cout << "1. Customer name" << endl;
             cout << "2. Movie title" << endl;
             cout << "3. Date/Day" << endl;
-            cout << "Enter choice: ";
-            cin >> search_choice;
-            cin.ignore();
+
+            int search_choice = InputHandler::GetIntInRange("Enter choice: ", 1, 3);
 
             if (search_choice == 1) {
-                string customer_name;
-                cout << "Enter customer name: ";
-                getline(cin, customer_name);
-                DisplayBookingSearchResults(booking_manager.SearchByCustomerName(customer_name));
+                string customer_name = InputHandler::GetNonEmptyString("Enter customer name: ");
+                DisplayBookingResults(booking_manager.SearchByCustomerName(customer_name));
             } else if (search_choice == 2) {
-                string movie_title;
-                cout << "Enter movie title: ";
-                getline(cin, movie_title);
-                DisplayBookingSearchResults(booking_manager.SearchByMovieTitle(movie_title));
-            } else if (search_choice == 3) {
-                string booking_date;
-                cout << "Enter date/day: ";
-                getline(cin, booking_date);
-                DisplayBookingSearchResults(booking_manager.SearchByDate(booking_date));
+                string movie_title = InputHandler::GetNonEmptyString("Enter movie title: ");
+                DisplayBookingResults(booking_manager.SearchByMovieTitle(movie_title));
             } else {
-                cout << "Invalid search choice." << endl;
+                string booking_date = InputHandler::GetNonEmptyString("Enter date/day: ");
+                DisplayBookingResults(booking_manager.SearchByDate(booking_date));
             }
         }
 
         else if (choice == 4) {
-            string screen_id;
-            string movie_title;
-            string day;
-            string date;
-            string start_time;
-            string end_time;
-
-            cout << "Enter screen ID: ";
-            getline(cin, screen_id);
-
-            cout << "Enter movie title: ";
-            getline(cin, movie_title);
-
-            cout << "Enter day: ";
-            getline(cin, day);
-
-            cout << "Enter date: ";
-            getline(cin, date);
-
-            cout << "Enter start time (HH:MM): ";
-            getline(cin, start_time);
-
-            cout << "Enter end time (HH:MM): ";
-            getline(cin, end_time);
+            string screen_id = InputHandler::GetNonEmptyString("Enter screen ID: ");
+            string movie_title = InputHandler::GetNonEmptyString("Enter movie title: ");
+            string day = InputHandler::GetValidDay("Enter day: ");
+            string date = InputHandler::GetNonEmptyString("Enter date: ");
+            string start_time = InputHandler::GetValidTime("Enter start time (HH:MM): ");
+            string end_time = InputHandler::GetValidEndTimeAfterStart("Enter end time (HH:MM): ", start_time);
 
             MovieSchedule schedule(screen_id, movie_title, day, date, start_time, end_time);
 
@@ -243,7 +189,7 @@ int main() {
                 schedule_manager.AddSchedule(schedule);
                 cout << "Schedule added successfully." << endl;
             } else {
-                cout << "Schedule could not be added. Check day, time order, or 25-minute gap." << endl;
+                cout << "Schedule could not be added. Check schedule overlap or 25-minute gap." << endl;
             }
         }
 
@@ -265,10 +211,6 @@ int main() {
 
         else if (choice == 8) {
             cout << "Exiting program." << endl;
-        }
-
-        else {
-            cout << "Invalid choice. Please try again." << endl;
         }
     }
 

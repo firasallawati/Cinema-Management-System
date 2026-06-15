@@ -19,11 +19,11 @@ public:
     PaymentDetails();
     PaymentDetails(string payment_method, string card_number, string cvc_number, string expiry_date, double cash_paid);
 
-    string GetPaymentMethod();
-    string GetCardNumber();
-    string GetCvcNumber();
-    string GetExpiryDate();
-    double GetCashPaid();
+    string GetPaymentMethod() const;
+    string GetCardNumber() const;
+    string GetCvcNumber() const;
+    string GetExpiryDate() const;
+    double GetCashPaid() const;
 
     void SetPaymentMethod(string payment_method);
     void SetCardNumber(string card_number);
@@ -31,7 +31,7 @@ public:
     void SetExpiryDate(string expiry_date);
     void SetCashPaid(double cash_paid);
 
-    void DisplayPaymentDetails();
+    void DisplayPaymentDetails() const;
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_PAYMENT_DETAILS_H

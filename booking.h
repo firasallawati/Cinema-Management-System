@@ -16,8 +16,8 @@ class Booking {
 private:
     string customer_name_;
     Movie movie_;
-    string booking_date_;   // e.g. "2025-06-14" or "Thu"
-    string booking_time_;   // e.g. "19:30"
+    string booking_date_;   // ex: "2025-06-14" or "Thu"
+    string booking_time_;   // ex: "19:30"
     int adult_tickets_;
     int child_tickets_;
     int student_tickets_;
@@ -31,16 +31,16 @@ public:
             int adult_tickets, int child_tickets, int student_tickets, int senior_tickets,
             double total_cost, PaymentDetails payment_details);
 
-    string GetCustomerName();
-    Movie GetMovie();
-    string GetBookingDate();
-    string GetBookingTime();
-    int GetAdultTickets();
-    int GetChildTickets();
-    int GetStudentTickets();
-    int GetSeniorTickets();
-    double GetTotalCost();
-    PaymentDetails GetPaymentDetails();
+    string GetCustomerName() const;
+    Movie GetMovie() const;
+    string GetBookingDate() const;
+    string GetBookingTime() const;
+    int GetAdultTickets() const;
+    int GetChildTickets() const;
+    int GetStudentTickets() const;
+    int GetSeniorTickets() const;
+    double GetTotalCost() const;
+    PaymentDetails GetPaymentDetails() const;
 
     void SetCustomerName(string customer_name);
     void SetMovie(Movie movie);
@@ -53,8 +53,8 @@ public:
     void SetTotalCost(double total_cost);
     void SetPaymentDetails(PaymentDetails payment_details);
 
-    int GetTotalTickets();
-    void DisplayBooking();
+    int GetTotalTickets() const;
+    void DisplayBooking() const;
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_BOOKING_H
