@@ -17,4 +17,6 @@ add_executable(T0466146_453_Coursework_Real main.cpp
         booking_manager.cpp
         booking_manager.h
         schedule_manager.cpp
-        schedule_manager.h)
+        schedule_manager.h
+        input_handler.cpp
+        input_handler.h)
