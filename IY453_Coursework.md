@@ -221,15 +221,224 @@ The purpose of the program is to be designed for easy creation of ticket booking
 
 ---
 
-**Annotation Screenshots:**
+##### **Annotation Screenshots:**
+
+**1 - Main Menu**
+
+<img src="main_menu.png" title="" alt="" width="322">
+
+To start the program, the user is greeted with a main menu to help him navigate through the program and gives him the freedom to choose whatever he wants in no specific order. The main menu includes the following: Add Booking, View All Booking, Search Bookings, Add Schedule, View All Schedules, Save Data, Load Data & Exit.
+
+
+
+**2- Add New Booking**
+
+<img src="add_booking.png" title="" alt="" width="325">
+
+Option 1 (Add Booking) allows the user/staff to input information about the booking such as name, movie title, booking data/time & amount of tickets and their types. It also allows the staff to assign the booking to a screen and register the booker's payment.
+
+
+
+**3- View All Saved Bookings**
+
+<img title="" src="view_bookings.png" alt="" width="197">
+
+Option 2 (View All Bookings) allows the user to view all bookings stored in memory and/or in the booking.csv file which stores the booking data.
+
+
+
+**4- Search Saved Bookings**
+
+<img title="" src="search_bookings.png" alt="" width="217">
+
+Option 3 (Search Bookings) gives the user the ability to search for a saved booking based on a specific filter such as by: Customer name, Movie title or the Date/Day. 
+
+
+
+**5- Add New Schedule**
+
+<img title="" src="add_schedule.png" alt="" width="266">
+
+Now moving on to the schedule part, option 4 (Add Schedule) allows the user to create a new schedule by inputting data in order to allocate a movie to specific screen and listing the exact times and date for the showing.
+
+
+
+**6- View All Saved Schedules**
+
+<img src="view_all_schedules.png" title="" alt="" width="276">
+
+Option 5 (View All Schedules) displays all the saved schedules that are either stored in the memory or saved into the schedule.csv file.
+
+
+
+**7- Save Stored Data**
+
+<img src="save_data.png" title="" alt="" width="269">
+
+Option 6 (Save Data) gives the user an option to allow the program to write the newly added bookings and schedules into their respective .csv files in order for it to save it into the program rather than just in the memory which allows the user to close the program, rerun it and still be able to see their data.
+
+
+
+**8- Load Stored Data**
+
+<img src="load_data.png" title="" alt="" width="308">
+
+Option 7 (Load Data) allows the user to load the data that is stored in the bookings.csv file aswell as the schedule.csv file in order to see it in the program.
+
+
+
+**9- Exit The Program**
+
+<img title="" src="exit.png" alt="" width="300">
+
+Finally, option 8 (Exit) gives the choice of ending the program and exiting out of it to the user.
 
 ---
 
-**Techincal Elements:**
+##### **Techincal Elements:**
+
+**Classes And What They Do:**
+
+- Movie – Represents a film and its details: title, genre, running time, etc.
+- Screen – Represents a cinema screen, with capacity and facilities information.
+- PaymentDetails – Stores the payment method and either card details or cash amount for creating a new booking.
+- Booking – Represents a customer’s ticket booking for a specific movie, day, time and ticket mix.
+- MovieSchedule – Represents a scheduled showing of a movie on a selected screen, day, date and time.
+- InputHandler – Provides helper functions for safe, validated user input such as the strings, numbers, days, times and payment.
+- BookingManager – Holds and manages all bookings: adding, validating, searching and saving/loading.
+- ScheduleManager – Holds and manages all schedules: adding, checking gaps & overlaps and saving & loading.
+
+--------------------------------------------------
+
+**Key attributes (by class):**
+
+Movie:
+
+- title_, description_, genre_, certificate_, main_star_, distributor_, release_date_ – textual details describing the film.
+- running_time_ – film length in minutes, used for schedule timing.
+
+Screen:
+
+- screen_id_ – ID of the screen (ex: "1").
+- current_movie_ – Name of the movie currently selected to this screen.
+- max_capacity_ – Total number of seats in the screen.
+- available_seats_ – Seats that are still free for booking.
+- facilities_ – Description of facilities (ex: "Standard", "IMAX, Seat service", ect).
+
+PaymentDetails:
+
+- payment_method_ – "Cash" or "Card".
+- card_number_, cvc_number_, expiry_date_ – Card details when paying by card.
+- cash_paid_ – Amount of cash paid when paying with cash.
+
+Booking:
+
+- customer_name_ – Name of the customer.
+- movie_ – The Movie being booked.
+- booking_date_, booking_time_ – When the booking is for.
+- adult_tickets_, child_tickets_, student_tickets_, senior_tickets_ – Number of tickets by type.
+- total_cost_ – Total price for the booking.
+- payment_details_ – Associated PaymentDetails object.
+
+MovieSchedule:
+
+- screen_id_ – Screen used for this showing.
+- movie_title_ – Title of movie being shown.
+- day_, date_ – Day name and calendar date of the showing.
+- start_time_, end_time_ – Start and end times for that showing.
+
+--------------------------------------------------
+
+**Main methods and constructors:**
+
+Movie:
+
+- Movie() – Its a default constructor: creates a movie with empty or zero fields.
+- Movie(...) – Parameterised constructor: creates a movie with all details set.
+- Get/Set methods (GetTitle, SetTitle, etc.) – Access and update each movie attribute.
+- DisplayMovie() – Outputs all movie details to the console screen.
+
+Screen:
+
+- Screen() – Is a default constructor: creates a screen with blank ID/movie and zero capacities.
+- Screen(string screen_id, string current_movie, int max_capacity, int available_seats, string facilities) – Creates a screen with all key data set.
+- Get/Set methods (GetScreenId, SetScreenId, etc.) – Access and update ID, movie, capacities and facilities.
+- DisplayScreen() – Outputs screen details and capacities.
+
+PaymentDetails:
+
+- PaymentDetails() – Default constructor: starts with no payment method and zero cash.
+- PaymentDetails(string payment_method, string card_number, string cvc_number, string expiry_date, double cash_paid) – Creates a payment record with all details filled in.
+- Get/Set methods – Access or update method, card fields, expiry date and cash amount.
+- DisplayPaymentDetails() – Prints card details for card payments or cash amount for cash payments.
+
+Booking:
+
+- Booking() – A default constructor: empty booking with no customer or tickets set.
+- Booking(string customer_name, Movie movie, string booking_date, string booking_time, int adult_tickets, int child_tickets, int student_tickets, int senior_tickets, double total_cost, PaymentDetails payment_details) – Creates a complete booking in one call.
+- Get/Set methods – Access or update customer name, movie, date/time, ticket numbers, total cost, and payment details.
+- GetTotalTickets() – Returns the sum of all ticket types in this booking.
+- DisplayBooking() – Prints a summary of the booking to the console.
+
+MovieSchedule:
+
+- MovieSchedule() – Default constructor: empty schedule entry.
+- MovieSchedule(string screen_id, string movie_title, string day, string date, string start_time, string end_time) – Creates one full schedule record.
+- Get/Set methods – Access or update screen, movie title, day/date and times.
+- DisplayMovieSchedule() – Prints schedule entry.
+
+--------------------------------------------------
+
+**Input/validation methods (InputHandler)**
+
+- GetNonEmptyString(...) – Keeps reprompting until a non-empty line is entered.
+- GetNonNegativeInt(...) – Repeatedly prompts until an integer ≥ 0 is entered.
+- GetIntInRange(...) – Will repeatedly prompt until the value is within a given range.
+- GetDoubleAtLeast(...) – Keep prompting until the value is at least a given minimum.
+- NormalizeDay(...) – Normalises a day string (ex: from "thursday" to "Thursday").
+- IsValidDay(...) – Verifies weather a day is valid: Thursday to Wednesday.
+- GetValidDay(...) – Combines the prompt plus the validation to return only valid days.
+- IsValidTimeFormat(...) – Responsible for verifying the format of the time string HH:MM and within 24 hours
+- TimeToMinutes(...) – Converts HH:MM into total minutes to help in comparisons for validations.
+- GetValidTime(...) – Prompts until a time is correctly formatted.
+- GetValidEndTimeAfterStart(...) – Prompts until an end time is valid, after the start time, and within cinema opening hours.
+- GetValidPaymentMethod(...) – Prompts the user until he enters a valid payment method: "cash" or "card".
+
+--------------------------------------------------
+
+**Managers and key helpers:**
+
+BookingManager:
+
+- CanAddBooking(...) – Checks booking rules like the capacity before adding the booking.
+- AddBooking(...) – Adds a booking.
+- DisplayAllBookings() – Prints all stored bookings.
+- SearchByCustomerName(...), SearchByMovieTitle(...), SearchByDate(...) – Find matching bookings.
+- SaveBookingsToFile(...) / LoadBookingsFromFile(...) – Read / write booking data from / to file.
+
+ScheduleManager:
+
+- CanAddSchedule(...) – Checks that a schedule entry is valid: no overlap, has 25-minute gap and i inside opening hours.
+- AddSchedule(...) – Stores a valid schedule entry.
+- DisplayAllSchedules() – Prints all scheduled showings.
+- SaveSchedulesToFile(...) / LoadSchedulesFromFile(...) – Reads / writes schedule data.
+- HasTwentyFiveMinuteGap(...) – Checks that the gap between two showings is at least 25 minutes.
+
+Helper functions in main:
+
+- CalculateBookingCost(...) – In charge of multiplying the ticket counts by the fixed ticket prices and then at the end sums them up together.
+- DisplayBookingResults(...) – Prints a list of bookings returned by a search.
+- main() – is the program's entry point; drives the menu, user interaction, and calls into the managers.
 
 ---
 
-### **Refrences**
+### **Evaluation**
+
+
+
+---
+
+### **References**
 
 [How to check if a string value is in a correct time format using c++](https://stackoverflow.com/questions/49972344/how-to-check-if-a-string-value-is-in-a-correct-time-format-using-c "https://stackoverflow.com/questions/49972344/how-to-check-if-a-string-value-is-in-a-correct-time-format-using-c")
 
@@ -248,8 +457,6 @@ File Handling if/ofstream
 ---
 
 ### Appendix Code
-
----
 
 **main.cpp**
 
@@ -349,12 +556,13 @@ while (total_tickets > screens[screen_choice - 1].GetAvailableSeats()) {
     cout << "Not enough seats available on this screen." << endl;  
     cout << "Available seats: " << screens[screen_choice - 1].GetAvailableSeats() << endl;  
 
-    adult_tickets = InputHandler::GetNonNegativeInt("Re-enter number of adult tickets: ");  
-    child_tickets = InputHandler::GetNonNegativeInt("Re-enter number of child tickets: ");  
-    student_tickets = InputHandler::GetNonNegativeInt("Re-enter number of student tickets: ");  
-    senior_tickets = InputHandler::GetNonNegativeInt("Re-enter number of senior tickets: ");  
+adult_tickets = InputHandler::GetNonNegativeInt("Re-enter number of adult tickets: ");  
+child_tickets = InputHandler::GetNonNegativeInt("Re-enter number of child tickets: ");  
+student_tickets = InputHandler::GetNonNegativeInt("Re-enter number of student tickets: ");  
+senior_tickets = InputHandler::GetNonNegativeInt("Re-enter number of senior tickets: ");  
 
-    total_tickets = adult_tickets + child_tickets + student_tickets + senior_tickets;  
+total_tickets = adult_tickets + child_tickets + student_tickets + senior_tickets;  
+
 }  
 
 double total_cost = CalculateBookingCost(adult_tickets, child_tickets, student_tickets, senior_tickets);  
@@ -370,9 +578,10 @@ if (payment_method == "Card") {
     string cvc_number = InputHandler::GetNonEmptyString("Enter CVC number: ");  
     string expiry_date = InputHandler::GetNonEmptyString("Enter expiry date: ");  
 
-    payment_details.SetCardNumber(card_number);  
-    payment_details.SetCvcNumber(cvc_number);  
-    payment_details.SetExpiryDate(expiry_date);  
+payment_details.SetCardNumber(card_number);  
+payment_details.SetCvcNumber(cvc_number);  
+payment_details.SetExpiryDate(expiry_date);  
+
 } else {  
     double cash_paid = InputHandler::GetDoubleAtLeast("Enter cash paid: ", total_cost);  
     payment_details.SetCashPaid(cash_paid);  
@@ -397,11 +606,12 @@ Booking booking(
 if (booking_manager.CanAddBooking(screens[screen_choice - 1], booking)) {  
     booking_manager.AddBooking(booking);  
 
-    int updated_seats = screens[screen_choice - 1].GetAvailableSeats() - booking.GetTotalTickets();  
-    screens[screen_choice - 1].SetAvailableSeats(updated_seats);  
-    screens[screen_choice - 1].SetCurrentMovie(movie_title);  
+int updated_seats = screens[screen_choice - 1].GetAvailableSeats() - booking.GetTotalTickets();  
+screens[screen_choice - 1].SetAvailableSeats(updated_seats);  
+screens[screen_choice - 1].SetCurrentMovie(movie_title);  
 
-    cout << "Booking added successfully." << endl;  
+cout << "Booking added successfully." << endl;  
+
 } else {  
     cout << "Booking could not be added. Check booking rules or screen capacity." << endl;  
 }  
@@ -1936,3 +2146,5 @@ cout << "Invalid payment method. Please enter Cash or Card." << endl;
 }  
 
 }
+
+---

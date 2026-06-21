@@ -210,7 +210,7 @@ int main() {
         }
 
         else if (choice == 8) {
-            cout << "Exiting program." << endl;
+            cout << "See You Next Time! Exiting..." << endl;
         }
     }
 
