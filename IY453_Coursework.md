@@ -434,25 +434,27 @@ Helper functions in main:
 
 ### **Evaluation**
 
+Overall, the program meets most of the main requirements of the brief and performs the core cinema tasks effectively. It allows staff to create bookings, store film and screen information, calculate ticket prices, process payments, search booking records, and save booking and schedule data to files. This means the main purpose of the system has been achieved, especially in relation to the basic booking and schedule management features required in the assignment.
 
+One of the strongest parts of the program is its structure. The code is divided into separate classes such as Booking, Movie, Screen, PaymentDetails and MovieSchedule, which makes the system more organised and easier to understand. This level organisation helped keep related data and behavior together and made the program easier to test . Another strength is the validation used in the input handling. Times, days, ticket values and payment methods are checked before being accepted, which reduces the amount of errors and makes the system more reliable and efficient during use.
+
+The weaknesses are mainly in the parts of the program that are still quite limited to what they can really do. Although the search feature works, it is fairly basic and only supports direct matching rather than more flexible searching. The file handling also works, but it cannot deal with an issue such as if a file is missing, empty, or incorrectly formatted. Moreover, the user interface is functional and while it does the job, it can definitely be improved as it is not especially user friendly. These weaknesses do not stop the system from working, but they do reduce the overall quality and usability of the final program and how the user feels when using it.
+
+There were also some issues found during testing. Input validation was one of the main challenges, especially for time values as it required to only accept a specific format (HH:MM) and then combine and convert the hours and minutes to only minutes as well as invalid day names, blank inputs and incorrect payment details. Edge cases such as zero tickets, over-capacity bookings and schedules with insufficient gaps between showings had to be checked carefully. Testing showed that some areas needed stronger validation logic, and this helped identify bugs and incomplete checks earlier than they might otherwise have been found.
+
+In terms of improvements, there are several useful additions that could be made if more time were available. The search system could be improved by allowing partial matches, case-insensitive searching, or multiple filters at once. The user interface could be made clearer with better menus and output formatting or even by adding a whole GUI. The file handling could also be improved by adding stronger error handling and better protection against damaged or badly formatted files. Another improvement would be to extend the schedule system further so it could automatically generate showings based on running time and the required cleaning gap, rather than relying more heavily on manual entry, having the system be more automated would be very time efficient and more useful for the cinema staff.
+
+This project was useful in showing what worked well and what did not. Separating the program into classes worked well because it made the design clearer and supported object-oriented programming properly. However, some parts of the logic would have benefited from more planning before coding started, especially validation and file operations. If the project were started again, it would be better to design the validation rules and file structure earlier, and to test each feature sooner as it is built rather than leaving more of the testing until later. If more time were available, the main focus would be on improving usability, making the searching and file handling more advanced, and strengthening the overall polish of the program to increase its user friendliness and usability in general.
 
 ---
 
 ### **References**
 
-[How to check if a string value is in a correct time format using c++](https://stackoverflow.com/questions/49972344/how-to-check-if-a-string-value-is-in-a-correct-time-format-using-c "https://stackoverflow.com/questions/49972344/how-to-check-if-a-string-value-is-in-a-correct-time-format-using-c")
+Cplusplus.com Forum. (2017, February 19). *Beginner forum thread 208986*. Retrieved from: [Determining how many minutes have passed - C++ Forum](https://cplusplus.com/forum/beginner/208986/ "https://cplusplus.com/forum/beginner/208986/") [Accessed 14 June 2026].
 
-Check Valid Time
+W3Schools. (n.d.). *C++ files*. Retrieved from: [C++ Files](https://www.w3schools.com/cpp/cpp_files.asp "https://www.w3schools.com/cpp/cpp_files.asp") [Accessed 10 June 2026].
 
-[C++ iostream cin object](https://www.w3schools.com/cpp/ref_iostream_cin.asp "https://www.w3schools.com/cpp/ref_iostream_cin.asp")
-
-Buffer Clear
-
-[C++ Files](https://www.w3schools.com/cpp/cpp_files.asp)
-
-File Handling if/ofstream
-
-25 min gap
+W3Schools. (n.d.). *C++ cin*. Retrieved from: [C++ iostream cin object](https://www.w3schools.com/cpp/ref_iostream_cin.asp "https://www.w3schools.com/cpp/ref_iostream_cin.asp") [Accessed 6 June 2026].
 
 ---
 
@@ -1533,12 +1535,15 @@ return total_revenue;
 
 }  
 
-void BookingManager::SaveBookingsToFile(string file_name) {  <mark> ///// REF IF/OFSTREAM</mark>
-    ofstream out_file(file_name);  
+void BookingManager::SaveBookingsToFile(string file_name) { 
 
-if (!out_file.is_open()) {  
-    cout << "Error opening booking file for writing." << endl;  
-    return;  
+// **(W3Schools, n.d.)**
+
+<mark>ofstream out_file(file_name);</mark>  
+
+<mark>if (!out_file.is_open()) { </mark> 
+   <mark> cout << "Error opening booking file for writing." << endl;</mark>  
+    <mark>return;</mark>  
 }  
 
 for (int i = 0; i < bookings_.size(); i++) {  
@@ -1560,12 +1565,14 @@ out_file.close();
 
 }  
 
-void BookingManager::LoadBookingsFromFile(string file_name) {  <mark>//// REF IF/OFSTREAM</mark>
-    ifstream in_file(file_name);  
+void BookingManager::LoadBookingsFromFile(string file_name) { 
 
-if (!in_file.is_open()) {  
+// **(W3Schools, n.d.)**
+    <mark>ifstream in_file(file_name);</mark>  
+
+<mark>if (!in_file.is_open()) {</mark>  
     cout << "Error opening booking file for reading." << endl;  
-    return;  
+   <mark> return;</mark>  
 }  
 
 bookings_.clear();  
@@ -1802,12 +1809,14 @@ return true;
 
 }  
 
-void ScheduleManager::SaveSchedulesToFile(string file_name) {  
-    ofstream out_file(file_name);  
+void ScheduleManager::SaveSchedulesToFile(string file_name) {
 
-if (!out_file.is_open()) {  
+  // **(W3Schools, n.d.)**
+    <mark>ofstream out_file(file_name);  </mark>
+
+<mark>if (!out_file.is_open()) { </mark> 
     cout << "Error opening schedule file for writing." << endl;  
-    return;  
+    <mark>return;</mark>  
 }  
 
 for (int i = 0; i < schedules_.size(); i++) {  
@@ -1825,12 +1834,14 @@ out_file.close();
 
 }  
 
-void ScheduleManager::LoadSchedulesFromFile(string file_name) {  
-    ifstream in_file(file_name);  
+void ScheduleManager::LoadSchedulesFromFile(string file_name) {
 
-if (!in_file.is_open()) {  
+// **(W3Schools, n.d.)**  
+    <mark>ifstream in_file(file_name);</mark>  
+
+<mark>if (!in_file.is_open()) {</mark>  
     cout << "Error opening schedule file for reading." << endl;  
-    return;  
+    <mark>return;</mark>  
 }  
 
 schedules_.clear();  
@@ -1898,7 +1909,7 @@ static string GetValidPaymentMethod(const string& prompt);
 
 #endif
 
-**input_handler.cpp** <mark>/////////// [C++ iostream cin object](https://www.w3schools.com/cpp/ref_iostream_cin.asp "https://www.w3schools.com/cpp/ref_iostream_cin.asp") Buffer Clear </mark>
+**input_handler.cpp** 
 
 #include "input_handler.h"  
 #include <cctype>  
@@ -1929,12 +1940,16 @@ while (true) {
 
 if (cin.fail()) {  
     cin.clear();  
-    cin.ignore(10000, '\n');  
+
+// **(W3Schools, n.d.)**
+    <mark>cin.ignore(10000, '\n');</mark>  
     cout << "Invalid number. Please enter a whole number." << endl;  
     continue;  
 }  
 
-cin.ignore(10000, '\n');  
+// **(W3Schools, n.d.)**
+
+<mark>cin.ignore(10000, '\n');  </mark>
 
 if (value >= 0) {  
     return value;  
@@ -1960,7 +1975,9 @@ if (cin.fail()) {
     continue;  
 }  
 
-cin.ignore(10000, '\n');  
+// **(W3Schools, n.d.)**
+
+<mark>cin.ignore(10000, '\n');  </mark>
 
 if (value >= min && value <= max) {  
     return value;  
@@ -1980,13 +1997,17 @@ while (true) {
     cin >> value;  
 
 if (cin.fail()) {  
-    cin.clear();  
-    cin.ignore(10000, '\n');  
+    cin.clear();
+
+// **(W3Schools, n.d.)**  
+    <mark>cin.ignore(10000, '\n'); </mark> 
     cout << "Invalid amount. Please enter a valid number." << endl;  
     continue;  
-}  
+}
 
-cin.ignore(10000, '\n');  
+// **(W3Schools, n.d.)**  
+
+<mark>cin.ignore(10000, '\n');  </mark>
 
 if (value >= minimum_value) {  
     return value;  
@@ -2050,17 +2071,19 @@ if (!isdigit(time_text[0]) || !isdigit(time_text[1]) ||
     return false;  
 }  
 
-int hours = stoi(time_text.substr(0, 2));  
-int minutes = stoi(time_text.substr(3, 2));  
+// **(Cplusplus.com Forum, 2017)**
 
-return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;  
+<mark>int hours = stoi(time_text.substr(0, 2));</mark>  
+<mark>int minutes = stoi(time_text.substr(3, 2));</mark>  
+
+<mark>return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59</mark>;  
 
 }  
 
-int InputHandler::TimeToMinutes(const string& time_text) {  
-    int hours = stoi(time_text.substr(0, 2));  
-    int minutes = stoi(time_text.substr(3, 2));  
-    return (hours * 60) + minutes;  
+<mark>int InputHandler::TimeToMinutes(const string& time_text) {</mark>  
+    <mark>int hours = stoi(time_text.substr(0, 2));</mark>  
+    <mark>int minutes = stoi(time_text.substr(3, 2));</mark>  
+    <mark>return (hours * 60) + minutes;</mark>  
 }  
 
 string InputHandler::GetValidTime(const string& prompt) {  
