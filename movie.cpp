@@ -1,106 +1,95 @@
-//
-// Created by firas on 12/06/2026.
-//
-
-#include <iostream>
 #include "movie.h"
 
 using namespace std;
 
-Movie::Movie() {
-    title_ = "";
-    description_ = "";
-    genre_ = "";
-    certificate_ = "";
-    running_time_ = 0;
-    main_star_ = "";
-    distributor_ = "";
-    release_date_ = "";
+Movie::Movie()
+    : title(""),
+      description(""),
+      genre(""),
+      running_time(0),
+      main_star(""),
+      film_distributor(""),
+      release_date("") {
 }
 
-Movie::Movie(string title, string description, string genre, string certificate,
-             int running_time, string main_star, string distributor, string release_date) {
-    title_ = title;
-    description_ = description;
-    genre_ = genre;
-    certificate_ = certificate;
-    running_time_ = running_time;
-    main_star_ = main_star;
-    distributor_ = distributor;
-    release_date_ = release_date;
+Movie::Movie(const string& title,
+             const string& description,
+             const string& genre,
+             int running_time,
+             const string& main_star,
+             const string& film_distributor,
+             const string& release_date)
+    : title(title),
+      description(description),
+      genre(genre),
+      running_time(running_time),
+      main_star(main_star),
+      film_distributor(film_distributor),
+      release_date(release_date) {
 }
 
 string Movie::GetTitle() const {
-    return title_;
+    return title;
 }
 
 string Movie::GetDescription() const {
-    return description_;
+    return description;
 }
 
 string Movie::GetGenre() const {
-    return genre_;
-}
-
-string Movie::GetCertificate() const {
-    return certificate_;
+    return genre;
 }
 
 int Movie::GetRunningTime() const {
-    return running_time_;
+    return running_time;
 }
 
 string Movie::GetMainStar() const {
-    return main_star_;
+    return main_star;
 }
 
-string Movie::GetDistributor() const {
-    return distributor_;
+string Movie::GetFilmDistributor() const {
+    return film_distributor;
 }
 
 string Movie::GetReleaseDate() const {
-    return release_date_;
+    return release_date;
 }
 
-void Movie::SetTitle(string title) {
-    title_ = title;
+void Movie::SetTitle(const string& title) {
+    this->title = title;
 }
 
-void Movie::SetDescription(string description) {
-    description_ = description;
+void Movie::SetDescription(const string& description) {
+    this->description = description;
 }
 
-void Movie::SetGenre(string genre) {
-    genre_ = genre;
-}
-
-void Movie::SetCertificate(string certificate) {
-    certificate_ = certificate;
+void Movie::SetGenre(const string& genre) {
+    this->genre = genre;
 }
 
 void Movie::SetRunningTime(int running_time) {
-    running_time_ = running_time;
+    this->running_time = running_time;
 }
 
-void Movie::SetMainStar(string main_star) {
-    main_star_ = main_star;
+void Movie::SetMainStar(const string& main_star) {
+    this->main_star = main_star;
 }
 
-void Movie::SetDistributor(string distributor) {
-    distributor_ = distributor;
+void Movie::SetFilmDistributor(const string& film_distributor) {
+    this->film_distributor = film_distributor;
 }
 
-void Movie::SetReleaseDate(string release_date) {
-    release_date_ = release_date;
+void Movie::SetReleaseDate(const string& release_date) {
+    this->release_date = release_date;
 }
 
 void Movie::DisplayMovie() const {
-    cout << "Title: " << title_ << endl;
-    cout << "Description: " << description_ << endl;
-    cout << "Genre: " << genre_ << endl;
-    cout << "Certificate: " << certificate_ << endl;
-    cout << "Running Time: " << running_time_ << " minutes" << endl;
-    cout << "Main Star: " << main_star_ << endl;
-    cout << "Distributor: " << distributor_ << endl;
-    cout << "Release Date: " << release_date_ << endl;
+    cout << "Title: " << title << endl;
+    cout << "Description: " << description << endl;
+    cout << "Genre: " << genre << endl;
+    cout << "Running Time: " << running_time << " minutes" << endl;
+    cout << "Main Star: " << main_star << endl;
+    cout << "Film Distributor: " << film_distributor << endl;
+    cout << "Release Date: " << release_date << endl;
 }

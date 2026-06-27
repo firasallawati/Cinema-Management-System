@@ -1,47 +1,32 @@
-//
-// Created by firas on 15/06/2026.
-//
-
 #ifndef T0466146_453_COURSEWORK_REAL_BOOKING_MANAGER_H
 #define T0466146_453_COURSEWORK_REAL_BOOKING_MANAGER_H
 
-
-#include <iostream>
 #include <vector>
 #include <string>
-#include <fstream>
-#include <sstream>
 #include "booking.h"
 #include "screen.h"
 
-using namespace std;
-
 class BookingManager {
 private:
-    vector<Booking> bookings_;
+    std::vector<Booking> bookings_;
+    std::vector<Screen> screens_;
+
+    Screen* FindScreenById(const std::string& screen_id);
 
 public:
-    BookingManager();
+    BookingManager() = default;
+    BookingManager(const std::vector<Screen>& screens);
 
-    void AddBooking(Booking booking);
-    void DisplayAllBookings();
+    bool CanAddBooking(const Booking& booking);
+    void AddBooking(const Booking& booking);
 
-    vector<Booking> SearchByCustomerName(string customer_name);
-    vector<Booking> SearchByMovieTitle(string movie_title);
-    vector<Booking> SearchByDate(string booking_date);
+    void DisplayAllBookings() const;
 
-    bool IsCapacityAvailable(Screen screen, Booking booking);
-    bool IsValidBookingDay(string booking_day);
-    bool CanAddBooking(Screen screen, Booking booking);
+    std::vector<Booking> SearchByCustomerName(const std::string& name) const;
+    std::vector<Booking> SearchByMovieTitle(const std::string& title) const;
+    std::vector<Booking> SearchByDate(const std::string& date) const;
 
-    double CalculateTotalRevenue();
-
-    void SaveBookingsToFile(string file_name);
-    void LoadBookingsFromFile(string file_name);
-
-    vector<Booking> GetBookings();
+    void LoadBookingsFromFile(const std::string& filename);
+    void SaveBookingsToFile(const std::string& filename) const;
 };
-
-
-
 #endif //T0466146_453_COURSEWORK_REAL_BOOKING_MANAGER_H

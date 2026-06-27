@@ -1,32 +1,22 @@
-//
-// Created by firas on 15/06/2026.
-//
-
 #include "booking_manager.h"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
-BookingManager::BookingManager() {
-}
-
-void BookingManager::AddBooking(Booking booking) {
+void BookingManager::AddBooking(const Booking& booking) {
     bookings_.push_back(booking);
 }
 
-void BookingManager::DisplayAllBookings() {
-    if (bookings_.empty()) {
-        cout << "No bookings found." << endl;
-        return;
+bool BookingManager::CanAddBooking(const Booking& booking) {
+    if (booking.GetTotalTickets() <= 0) {
+        return false;
     }
 
-    for (int i = 0; i < bookings_.size(); i++) {
-        cout << "Booking " << i + 1 << ":" << endl;
-        bookings_[i].DisplayBooking();
-        cout << endl;
-    }
+    return true;
 }
 
-vector<Booking> BookingManager::SearchByCustomerName(string customer_name) {
+vector<Booking> BookingManager::SearchByCustomerName(const string& customer_name) const {
     vector<Booking> results;
 
     for (int i = 0; i < bookings_.size(); i++) {
@@ -38,7 +28,7 @@ vector<Booking> BookingManager::SearchByCustomerName(string customer_name) {
     return results;
 }
 
-vector<Booking> BookingManager::SearchByMovieTitle(string movie_title) {
+vector<Booking> BookingManager::SearchByMovieTitle(const string& movie_title) const {
     vector<Booking> results;
 
     for (int i = 0; i < bookings_.size(); i++) {
@@ -50,7 +40,7 @@ vector<Booking> BookingManager::SearchByMovieTitle(string movie_title) {
     return results;
 }
 
-vector<Booking> BookingManager::SearchByDate(string booking_date) {
+vector<Booking> BookingManager::SearchByDate(const string& booking_date) const {
     vector<Booking> results;
 
     for (int i = 0; i < bookings_.size(); i++) {
@@ -62,133 +52,169 @@ vector<Booking> BookingManager::SearchByDate(string booking_date) {
     return results;
 }
 
-bool BookingManager::IsCapacityAvailable(Screen screen, Booking booking) {
-    if (booking.GetTotalTickets() <= screen.GetAvailableSeats()) {
-        return true;
-    }
-
-    return false;
-}
-
-bool BookingManager::IsValidBookingDay(string booking_day) {
-    if (booking_day == "Thursday" || booking_day == "Friday" ||
-        booking_day == "Saturday" || booking_day == "Sunday" ||
-        booking_day == "Monday" || booking_day == "Tuesday" ||
-        booking_day == "Wednesday") {
-        return true;
-    }
-
-    return false;
-}
-
-bool BookingManager::CanAddBooking(Screen screen, Booking booking) {
-    if (!IsValidBookingDay(booking.GetBookingDate())) {
-        return false;
-    }
-
-    if (!IsCapacityAvailable(screen, booking)) {
-        return false;
-    }
-
-    return true;
-}
-
-double BookingManager::CalculateTotalRevenue() {
-    double total_revenue = 0.0;
-
-    for (int i = 0; i < bookings_.size(); i++) {
-        total_revenue = total_revenue + bookings_[i].GetTotalCost();
-    }
-
-    return total_revenue;
-}
-
-void BookingManager::SaveBookingsToFile(string file_name) {
-    ofstream out_file(file_name);
-
-    if (!out_file.is_open()) {
-        cout << "Error opening booking file for writing." << endl;
+void BookingManager::DisplayAllBookings() const {
+    if (bookings_.empty()) {
+        cout << "No bookings available." << endl;
         return;
     }
 
     for (int i = 0; i < bookings_.size(); i++) {
-        out_file
-            << bookings_[i].GetCustomerName() << ","
-            << bookings_[i].GetMovie().GetTitle() << ","
-            << bookings_[i].GetBookingDate() << ","
-            << bookings_[i].GetBookingTime() << ","
-            << bookings_[i].GetAdultTickets() << ","
-            << bookings_[i].GetChildTickets() << ","
-            << bookings_[i].GetStudentTickets() << ","
-            << bookings_[i].GetSeniorTickets() << ","
-            << bookings_[i].GetTotalCost() << ","
-            << bookings_[i].GetPaymentDetails().GetPaymentMethod()
-            << endl;
+        cout << "Booking " << i + 1 << ":" << endl;
+        bookings_[i].DisplayBooking();
+        cout << endl;
     }
-
-    out_file.close();
 }
 
-void BookingManager::LoadBookingsFromFile(string file_name) {
-    ifstream in_file(file_name);
+void BookingManager::LoadBookingsFromFile(const string& filename) {
+    ifstream file(filename);
 
-    if (!in_file.is_open()) {
-        cout << "Error opening booking file for reading." << endl;
+    if (!file.is_open()) {
+        cout << "Booking file not found. Starting with empty bookings." << endl;
         return;
     }
 
     bookings_.clear();
 
     string line;
-    while (getline(in_file, line)) {
+    getline(file, line);
+
+    while (getline(file, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
         stringstream ss(line);
+
         string customer_name;
         string movie_title;
+        string movie_description;
+        string movie_genre;
+        string running_time_str;
+        string main_star;
+        string film_distributor;
+        string release_date;
+        string screen_id;
         string booking_date;
         string booking_time;
-        string adult_tickets_text;
-        string child_tickets_text;
-        string student_tickets_text;
-        string senior_tickets_text;
-        string total_cost_text;
+        string adult_tickets_str;
+        string child_tickets_str;
+        string student_tickets_str;
+        string senior_tickets_str;
+        string total_cost_str;
         string payment_method;
+        string card_number;
+        string cvc_number;
+        string expiry_date;
+        string cash_paid_str;
 
         getline(ss, customer_name, ',');
         getline(ss, movie_title, ',');
+        getline(ss, movie_description, ',');
+        getline(ss, movie_genre, ',');
+        getline(ss, running_time_str, ',');
+        getline(ss, main_star, ',');
+        getline(ss, film_distributor, ',');
+        getline(ss, release_date, ',');
+        getline(ss, screen_id, ',');
         getline(ss, booking_date, ',');
         getline(ss, booking_time, ',');
-        getline(ss, adult_tickets_text, ',');
-        getline(ss, child_tickets_text, ',');
-        getline(ss, student_tickets_text, ',');
-        getline(ss, senior_tickets_text, ',');
-        getline(ss, total_cost_text, ',');
+        getline(ss, adult_tickets_str, ',');
+        getline(ss, child_tickets_str, ',');
+        getline(ss, student_tickets_str, ',');
+        getline(ss, senior_tickets_str, ',');
+        getline(ss, total_cost_str, ',');
         getline(ss, payment_method, ',');
+        getline(ss, card_number, ',');
+        getline(ss, cvc_number, ',');
+        getline(ss, expiry_date, ',');
+        getline(ss, cash_paid_str, ',');
 
-        Movie movie;
-        movie.SetTitle(movie_title);
+        int running_time = stoi(running_time_str);
+        int adult_tickets = stoi(adult_tickets_str);
+        int child_tickets = stoi(child_tickets_str);
+        int student_tickets = stoi(student_tickets_str);
+        int senior_tickets = stoi(senior_tickets_str);
+        double total_cost = stod(total_cost_str);
+        double cash_paid = 0.0;
+
+        if (!cash_paid_str.empty()) {
+            cash_paid = stod(cash_paid_str);
+        }
+
+        Movie movie(
+            movie_title,
+            movie_description,
+            movie_genre,
+            running_time,
+            main_star,
+            film_distributor,
+            release_date
+        );
 
         PaymentDetails payment_details;
         payment_details.SetPaymentMethod(payment_method);
+        payment_details.SetCardNumber(card_number);
+        payment_details.SetCvcNumber(cvc_number);
+        payment_details.SetExpiryDate(expiry_date);
+        payment_details.SetCashPaid(cash_paid);
 
         Booking booking(
             customer_name,
             movie,
+            screen_id,
             booking_date,
             booking_time,
-            stoi(adult_tickets_text),
-            stoi(child_tickets_text),
-            stoi(student_tickets_text),
-            stoi(senior_tickets_text),
-            stod(total_cost_text),
+            adult_tickets,
+            child_tickets,
+            student_tickets,
+            senior_tickets,
+            total_cost,
             payment_details
         );
 
         bookings_.push_back(booking);
     }
 
-    in_file.close();
+    file.close();
 }
 
-vector<Booking> BookingManager::GetBookings() {
-    return bookings_;
+void BookingManager::SaveBookingsToFile(const string& filename) const {
+    ofstream file(filename);
+
+    if (!file.is_open()) {
+        cout << "Error opening booking file for saving." << endl;
+        return;
+    }
+
+    file << "CustomerName,MovieTitle,MovieDescription,MovieGenre,RunningTime,MainStar,FilmDistributor,ReleaseDate,ScreenID,BookingDate,BookingTime,AdultTickets,ChildTickets,StudentTickets,SeniorTickets,TotalCost,PaymentMethod,CardNumber,CvcNumber,ExpiryDate,CashPaid" << endl;
+
+    for (int i = 0; i < bookings_.size(); i++) {
+        Movie movie = bookings_[i].GetMovie();
+        PaymentDetails payment = bookings_[i].GetPaymentDetails();
+
+        file << bookings_[i].GetCustomerName() << ","
+             << movie.GetTitle() << ","
+             << movie.GetDescription() << ","
+             << movie.GetGenre() << ","
+             << movie.GetRunningTime() << ","
+             << movie.GetMainStar() << ","
+             << movie.GetFilmDistributor() << ","
+             << movie.GetReleaseDate() << ","
+             << bookings_[i].GetScreenId() << ","
+             << bookings_[i].GetBookingDate() << ","
+             << bookings_[i].GetBookingTime() << ","
+             << bookings_[i].GetAdultTickets() << ","
+             << bookings_[i].GetChildTickets() << ","
+             << bookings_[i].GetStudentTickets() << ","
+             << bookings_[i].GetSeniorTickets() << ","
+             << bookings_[i].GetTotalCost() << ","
+             << payment.GetPaymentMethod() << ","
+             << payment.GetCardNumber() << ","
+             << payment.GetCvcNumber() << ","
+             << payment.GetExpiryDate() << ","
+             << payment.GetCashPaid()
+             << endl;
+    }
+
+    file.close();
 }

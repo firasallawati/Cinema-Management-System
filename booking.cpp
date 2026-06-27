@@ -1,14 +1,14 @@
 //
-// Created by firas on 14/06/2026.
+// booking.cpp
 //
 
 #include "booking.h"
-
-using namespace std;
+#include <iostream>
 
 Booking::Booking() {
     customer_name_ = "";
     movie_ = Movie();
+    screen_id_ = "";
     booking_date_ = "";
     booking_time_ = "";
     adult_tickets_ = 0;
@@ -19,11 +19,20 @@ Booking::Booking() {
     payment_details_ = PaymentDetails();
 }
 
-Booking::Booking(string customer_name, Movie movie, string booking_date, string booking_time,
-                 int adult_tickets, int child_tickets, int student_tickets, int senior_tickets,
-                 double total_cost, PaymentDetails payment_details) {
+Booking::Booking(const std::string& customer_name,
+                 const Movie& movie,
+                 const std::string& screen_id,
+                 const std::string& booking_date,
+                 const std::string& booking_time,
+                 int adult_tickets,
+                 int child_tickets,
+                 int student_tickets,
+                 int senior_tickets,
+                 double total_cost,
+                 const PaymentDetails& payment_details) {
     customer_name_ = customer_name;
     movie_ = movie;
+    screen_id_ = screen_id;
     booking_date_ = booking_date;
     booking_time_ = booking_time;
     adult_tickets_ = adult_tickets;
@@ -34,7 +43,7 @@ Booking::Booking(string customer_name, Movie movie, string booking_date, string 
     payment_details_ = payment_details;
 }
 
-string Booking::GetCustomerName() const {
+std::string Booking::GetCustomerName() const {
     return customer_name_;
 }
 
@@ -42,11 +51,15 @@ Movie Booking::GetMovie() const {
     return movie_;
 }
 
-string Booking::GetBookingDate() const {
+std::string Booking::GetScreenId() const {
+    return screen_id_;
+}
+
+std::string Booking::GetBookingDate() const {
     return booking_date_;
 }
 
-string Booking::GetBookingTime() const {
+std::string Booking::GetBookingTime() const {
     return booking_time_;
 }
 
@@ -74,19 +87,23 @@ PaymentDetails Booking::GetPaymentDetails() const {
     return payment_details_;
 }
 
-void Booking::SetCustomerName(string customer_name) {
+void Booking::SetCustomerName(const std::string& customer_name) {
     customer_name_ = customer_name;
 }
 
-void Booking::SetMovie(Movie movie) {
+void Booking::SetMovie(const Movie& movie) {
     movie_ = movie;
 }
 
-void Booking::SetBookingDate(string booking_date) {
+void Booking::SetScreenId(const std::string& screen_id) {
+    screen_id_ = screen_id;
+}
+
+void Booking::SetBookingDate(const std::string& booking_date) {
     booking_date_ = booking_date;
 }
 
-void Booking::SetBookingTime(string booking_time) {
+void Booking::SetBookingTime(const std::string& booking_time) {
     booking_time_ = booking_time;
 }
 
@@ -110,7 +127,7 @@ void Booking::SetTotalCost(double total_cost) {
     total_cost_ = total_cost;
 }
 
-void Booking::SetPaymentDetails(PaymentDetails payment_details) {
+void Booking::SetPaymentDetails(const PaymentDetails& payment_details) {
     payment_details_ = payment_details;
 }
 
@@ -119,15 +136,16 @@ int Booking::GetTotalTickets() const {
 }
 
 void Booking::DisplayBooking() const {
-    cout << "Customer Name: " << customer_name_ << endl;
-    cout << "Movie: " << movie_.GetTitle() << endl;
-    cout << "Date: " << booking_date_ << endl;
-    cout << "Time: " << booking_time_ << endl;
-    cout << "Adult Tickets: " << adult_tickets_ << endl;
-    cout << "Child Tickets: " << child_tickets_ << endl;
-    cout << "Student Tickets: " << student_tickets_ << endl;
-    cout << "Senior Tickets: " << senior_tickets_ << endl;
-    cout << "Total Tickets: " << GetTotalTickets() << endl;
-    cout << "Total Cost: " << total_cost_ << endl;
-    cout << "Payment Method: " << payment_details_.GetPaymentMethod() << endl;
+    std::cout << "Customer Name: " << customer_name_ << std::endl;
+    std::cout << "Movie: " << movie_.GetTitle() << std::endl;
+    std::cout << "Screen ID: " << screen_id_ << std::endl;
+    std::cout << "Date: " << booking_date_ << std::endl;
+    std::cout << "Time: " << booking_time_ << std::endl;
+    std::cout << "Adult Tickets: " << adult_tickets_ << std::endl;
+    std::cout << "Child Tickets: " << child_tickets_ << std::endl;
+    std::cout << "Student Tickets: " << student_tickets_ << std::endl;
+    std::cout << "Senior Tickets: " << senior_tickets_ << std::endl;
+    std::cout << "Total Tickets: " << GetTotalTickets() << std::endl;
+    std::cout << "Total Cost: " << total_cost_ << std::endl;
+    std::cout << "Payment Method: " << payment_details_.GetPaymentMethod() << std::endl;
 }

@@ -19,4 +19,6 @@ add_executable(T0466146_453_Coursework_Real main.cpp
         schedule_manager.cpp
         schedule_manager.h
         input_handler.cpp
-        input_handler.h)
+        input_handler.h
+        movie_manager.cpp
+        movie_manager.h)

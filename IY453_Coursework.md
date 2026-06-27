@@ -229,15 +229,11 @@ The purpose of the program is to be designed for easy creation of ticket booking
 
 To start the program, the user is greeted with a main menu to help him navigate through the program and gives him the freedom to choose whatever he wants in no specific order. The main menu includes the following: Add Booking, View All Booking, Search Bookings, Add Schedule, View All Schedules, Save Data, Load Data & Exit.
 
-
-
 **2- Add New Booking**
 
 <img src="add_booking.png" title="" alt="" width="325">
 
 Option 1 (Add Booking) allows the user/staff to input information about the booking such as name, movie title, booking data/time & amount of tickets and their types. It also allows the staff to assign the booking to a screen and register the booker's payment.
-
-
 
 **3- View All Saved Bookings**
 
@@ -245,15 +241,11 @@ Option 1 (Add Booking) allows the user/staff to input information about the book
 
 Option 2 (View All Bookings) allows the user to view all bookings stored in memory and/or in the booking.csv file which stores the booking data.
 
-
-
 **4- Search Saved Bookings**
 
 <img title="" src="search_bookings.png" alt="" width="217">
 
 Option 3 (Search Bookings) gives the user the ability to search for a saved booking based on a specific filter such as by: Customer name, Movie title or the Date/Day. 
-
-
 
 **5- Add New Schedule**
 
@@ -261,15 +253,11 @@ Option 3 (Search Bookings) gives the user the ability to search for a saved book
 
 Now moving on to the schedule part, option 4 (Add Schedule) allows the user to create a new schedule by inputting data in order to allocate a movie to specific screen and listing the exact times and date for the showing.
 
-
-
 **6- View All Saved Schedules**
 
 <img src="view_all_schedules.png" title="" alt="" width="276">
 
 Option 5 (View All Schedules) displays all the saved schedules that are either stored in the memory or saved into the schedule.csv file.
-
-
 
 **7- Save Stored Data**
 
@@ -277,15 +265,11 @@ Option 5 (View All Schedules) displays all the saved schedules that are either s
 
 Option 6 (Save Data) gives the user an option to allow the program to write the newly added bookings and schedules into their respective .csv files in order for it to save it into the program rather than just in the memory which allows the user to close the program, rerun it and still be able to see their data.
 
-
-
 **8- Load Stored Data**
 
 <img src="load_data.png" title="" alt="" width="308">
 
 Option 7 (Load Data) allows the user to load the data that is stored in the bookings.csv file aswell as the schedule.csv file in order to see it in the program.
-
-
 
 **9- Exit The Program**
 

@@ -8,6 +8,7 @@
 #include "movie_schedule.h"
 #include "schedule_manager.h"
 #include "input_handler.h"
+#include "movie_manager.h"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ void DisplayBookingResults(const vector<Booking>& bookings) {
 int main() {
     BookingManager booking_manager;
     ScheduleManager schedule_manager;
+    MovieManager movie_manager;
 
     vector<Screen> screens;
     screens.push_back(Screen("Screen 1", "No Movie", 250, 250, "IMAX"));
@@ -44,23 +46,41 @@ int main() {
 
     int choice = 0;
 
-    while (choice != 8) {
+    while (choice != 11) {
         cout << endl;
-        cout << "    Cinema Booking System    " << endl;
+        cout << "     Cinema Booking System   " << endl;
         cout << "1. Add Booking" << endl;
         cout << "2. View All Bookings" << endl;
-        cout << "3. Search Bookings" << endl;
-        cout << "4. Add Schedule" << endl;
-        cout << "5. View All Schedules" << endl;
-        cout << "6. Save Data" << endl;
-        cout << "7. Load Data" << endl;
-        cout << "8. Exit" << endl;
+        cout << "3. Add Movies" << endl;
+        cout << "4. List Movies" << endl;
+        cout << "5. Add Schedule" << endl;
+        cout << "6. View All Schedules" << endl;
+        cout << "7. Search Bookings" << endl;
+        cout << "8. Save Data" << endl;
+        cout << "9. Load Data" << endl;
+        cout << "10. Reset Data" << endl;
+        cout << "11. Exit" << endl;
 
-        choice = InputHandler::GetIntInRange("Enter choice: ", 1, 8);
+        choice = InputHandler::GetIntInRange("Enter choice: ", 1, 11);
 
         if (choice == 1) {
+            if (movie_manager.GetMovieCount() == 0) {
+                cout << "No movies available. Please add movies or load data first." << endl;
+                continue;
+            }
+
             string customer_name = InputHandler::GetNonEmptyString("Enter customer name: ");
-            string movie_title = InputHandler::GetNonEmptyString("Enter movie title: ");
+
+            cout << "Available movies:" << endl;
+            movie_manager.ListMovies();
+            int movie_choice = InputHandler::GetIntInRange("Enter movie number: ", 1, movie_manager.GetMovieCount());
+            const Movie* selected_movie = movie_manager.GetMovieByIndex(movie_choice - 1);
+
+            if (selected_movie == nullptr) {
+                cout << "Invalid movie choice." << endl;
+                continue;
+            }
+
             string booking_day = InputHandler::GetValidDay("Enter booking day (Thursday to Wednesday): ");
             string booking_time = InputHandler::GetValidTime("Enter booking time (HH:MM): ");
 
@@ -87,6 +107,7 @@ int main() {
             }
 
             int screen_choice = InputHandler::GetIntInRange("Enter screen number: ", 1, screens.size());
+            string screen_id = screens[screen_choice - 1].GetScreenId();
 
             int total_tickets = adult_tickets + child_tickets + student_tickets + senior_tickets;
             while (total_tickets > screens[screen_choice - 1].GetAvailableSeats()) {
@@ -122,12 +143,10 @@ int main() {
                 payment_details.SetCashPaid(cash_paid);
             }
 
-            Movie movie;
-            movie.SetTitle(movie_title);
-
             Booking booking(
                 customer_name,
-                movie,
+                *selected_movie,
+                screen_id,
                 booking_day,
                 booking_time,
                 adult_tickets,
@@ -138,12 +157,12 @@ int main() {
                 payment_details
             );
 
-            if (booking_manager.CanAddBooking(screens[screen_choice - 1], booking)) {
+            if (booking_manager.CanAddBooking(booking)) {
                 booking_manager.AddBooking(booking);
 
                 int updated_seats = screens[screen_choice - 1].GetAvailableSeats() - booking.GetTotalTickets();
                 screens[screen_choice - 1].SetAvailableSeats(updated_seats);
-                screens[screen_choice - 1].SetCurrentMovie(movie_title);
+                screens[screen_choice - 1].SetCurrentMovie(selected_movie->GetTitle());
 
                 cout << "Booking added successfully." << endl;
             } else {
@@ -156,6 +175,72 @@ int main() {
         }
 
         else if (choice == 3) {
+            cout << "Add new movie" << endl;
+
+            string title = InputHandler::GetNonEmptyString("Enter movie title: ");
+            string description = InputHandler::GetNonEmptyString("Enter description: ");
+            string genre = InputHandler::GetNonEmptyString("Enter genre: ");
+            int running_time = InputHandler::GetNonNegativeInt("Enter running time (minutes): ");
+            string main_star = InputHandler::GetNonEmptyString("Enter main star: ");
+            string film_distributor = InputHandler::GetNonEmptyString("Enter film distributor: ");
+            string release_date = InputHandler::GetNonEmptyString("Enter release date: ");
+
+            Movie movie(
+                title,
+                description,
+                genre,
+                running_time,
+                main_star,
+                film_distributor,
+                release_date
+            );
+
+            movie_manager.AddMovie(movie);
+            cout << "Movie added successfully." << endl;
+        }
+
+        else if (choice == 4) {
+            movie_manager.ListMovies();
+        }
+
+        else if (choice == 5) {
+            if (movie_manager.GetMovieCount() == 0) {
+                cout << "No movies available. Please add movies or load data first." << endl;
+                continue;
+            }
+
+            string screen_id = InputHandler::GetNonEmptyString("Enter screen ID: ");
+
+            cout << "Available movies:" << endl;
+            movie_manager.ListMovies();
+            int movie_choice = InputHandler::GetIntInRange("Enter movie number: ", 1, movie_manager.GetMovieCount());
+            const Movie* selected_movie = movie_manager.GetMovieByIndex(movie_choice - 1);
+
+            if (selected_movie == nullptr) {
+                cout << "Invalid movie choice." << endl;
+                continue;
+            }
+
+            string day = InputHandler::GetValidDay("Enter day: ");
+            string date = InputHandler::GetNonEmptyString("Enter date: ");
+            string start_time = InputHandler::GetValidTime("Enter start time (HH:MM): ");
+            string end_time = InputHandler::GetValidEndTimeAfterStart("Enter end time (HH:MM): ", start_time);
+
+            MovieSchedule schedule(screen_id, selected_movie->GetTitle(), day, date, start_time, end_time);
+
+            if (schedule_manager.CanAddSchedule(schedule)) {
+                schedule_manager.AddSchedule(schedule);
+                cout << "Schedule added successfully." << endl;
+            } else {
+                cout << "Schedule could not be added. Check schedule overlap or 25-minute gap." << endl;
+            }
+        }
+
+        else if (choice == 6) {
+            schedule_manager.DisplayAllSchedules();
+        }
+
+        else if (choice == 7) {
             cout << "Search bookings by:" << endl;
             cout << "1. Customer name" << endl;
             cout << "2. Movie title" << endl;
@@ -175,42 +260,54 @@ int main() {
             }
         }
 
-        else if (choice == 4) {
-            string screen_id = InputHandler::GetNonEmptyString("Enter screen ID: ");
-            string movie_title = InputHandler::GetNonEmptyString("Enter movie title: ");
-            string day = InputHandler::GetValidDay("Enter day: ");
-            string date = InputHandler::GetNonEmptyString("Enter date: ");
-            string start_time = InputHandler::GetValidTime("Enter start time (HH:MM): ");
-            string end_time = InputHandler::GetValidEndTimeAfterStart("Enter end time (HH:MM): ", start_time);
-
-            MovieSchedule schedule(screen_id, movie_title, day, date, start_time, end_time);
-
-            if (schedule_manager.CanAddSchedule(schedule)) {
-                schedule_manager.AddSchedule(schedule);
-                cout << "Schedule added successfully." << endl;
-            } else {
-                cout << "Schedule could not be added. Check schedule overlap or 25-minute gap." << endl;
-            }
-        }
-
-        else if (choice == 5) {
-            schedule_manager.DisplayAllSchedules();
-        }
-
-        else if (choice == 6) {
+        else if (choice == 8) {
             booking_manager.SaveBookingsToFile("bookings.csv");
             schedule_manager.SaveSchedulesToFile("schedules.csv");
+            movie_manager.SaveMoviesToFile("movies.csv");
             cout << "Data saved successfully." << endl;
         }
 
-        else if (choice == 7) {
+        else if (choice == 9) {
             booking_manager.LoadBookingsFromFile("bookings.csv");
             schedule_manager.LoadSchedulesFromFile("schedules.csv");
+            movie_manager.LoadMoviesFromFile("movies.csv");
             cout << "Data loaded successfully." << endl;
         }
 
-        else if (choice == 8) {
-            cout << "See You Next Time! Exiting..." << endl;
+        else if (choice == 10) {
+            string confirm;
+
+            do {
+                confirm = InputHandler::GetNonEmptyString("Are you sure you want to reset all data (Bookings, Schedules & Movies)? This action cannot be undone. (Y/N): ");
+
+                if (confirm == "Y" || confirm == "y") {
+                    booking_manager = BookingManager();
+                    schedule_manager = ScheduleManager();
+                    movie_manager = MovieManager();
+
+                    screens.clear();
+                    screens.push_back(Screen("Screen 1", "No Movie", 250, 250, "IMAX"));
+                    screens.push_back(Screen("Screen 2", "No Movie", 200, 200, "Standard"));
+                    screens.push_back(Screen("Screen 3", "No Movie", 180, 180, "Couple Seats"));
+                    screens.push_back(Screen("Screen 4", "No Movie", 150, 150, "Seat Service"));
+                    screens.push_back(Screen("Screen 5", "No Movie", 100, 100, "Standard"));
+
+                    cout << "All data reset successfully." << endl;
+                    break;
+                }
+                else if (confirm == "N" || confirm == "n") {
+                    cout << "Reset cancelled." << endl;
+                    break;
+                }
+                else {
+                    cout << "Invalid input. Please enter Y or N." << endl;
+                }
+
+            } while (true);
+        }
+
+        else if (choice == 11) {
+            cout << "Exiting program." << endl;
         }
     }
 

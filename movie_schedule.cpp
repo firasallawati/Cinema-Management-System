@@ -1,11 +1,9 @@
 //
-// Created by firas on 15/06/2026.
+// movie_schedule.cpp
 //
 
 #include "movie_schedule.h"
 #include <iostream>
-
-using namespace std;
 
 MovieSchedule::MovieSchedule() {
     screen_id_ = "";
@@ -16,7 +14,12 @@ MovieSchedule::MovieSchedule() {
     end_time_ = "";
 }
 
-MovieSchedule::MovieSchedule(string screen_id, string movie_title, string day, string date, string start_time, string end_time) {
+MovieSchedule::MovieSchedule(const std::string& screen_id,
+                             const std::string& movie_title,
+                             const std::string& day,
+                             const std::string& date,
+                             const std::string& start_time,
+                             const std::string& end_time) {
     screen_id_ = screen_id;
     movie_title_ = movie_title;
     day_ = day;
@@ -25,59 +28,59 @@ MovieSchedule::MovieSchedule(string screen_id, string movie_title, string day, s
     end_time_ = end_time;
 }
 
-string MovieSchedule::GetScreenId() {
+std::string MovieSchedule::GetScreenId() const {
     return screen_id_;
 }
 
-string MovieSchedule::GetMovieTitle() {
+std::string MovieSchedule::GetMovieTitle() const {
     return movie_title_;
 }
 
-string MovieSchedule::GetDay() {
+std::string MovieSchedule::GetDay() const {
     return day_;
 }
 
-string MovieSchedule::GetDate() {
+std::string MovieSchedule::GetDate() const {
     return date_;
 }
 
-string MovieSchedule::GetStartTime() {
+std::string MovieSchedule::GetStartTime() const {
     return start_time_;
 }
 
-string MovieSchedule::GetEndTime() {
+std::string MovieSchedule::GetEndTime() const {
     return end_time_;
 }
 
-void MovieSchedule::SetScreenId(string screen_id) {
+void MovieSchedule::SetScreenId(const std::string& screen_id) {
     screen_id_ = screen_id;
 }
 
-void MovieSchedule::SetMovieTitle(string movie_title) {
+void MovieSchedule::SetMovieTitle(const std::string& movie_title) {
     movie_title_ = movie_title;
 }
 
-void MovieSchedule::SetDay(string day) {
+void MovieSchedule::SetDay(const std::string& day) {
     day_ = day;
 }
 
-void MovieSchedule::SetDate(string date) {
+void MovieSchedule::SetDate(const std::string& date) {
     date_ = date;
 }
 
-void MovieSchedule::SetStartTime(string start_time) {
+void MovieSchedule::SetStartTime(const std::string& start_time) {
     start_time_ = start_time;
 }
 
-void MovieSchedule::SetEndTime(string end_time) {
+void MovieSchedule::SetEndTime(const std::string& end_time) {
     end_time_ = end_time;
 }
 
-void MovieSchedule::DisplayMovieSchedule() {
-    cout << "Screen ID: " << screen_id_ << endl;
-    cout << "Movie Title: " << movie_title_ << endl;
-    cout << "Day: " << day_ << endl;
-    cout << "Date: " << date_ << endl;
-    cout << "Start Time: " << start_time_ << endl;
-    cout << "End Time: " << end_time_ << endl;
+void MovieSchedule::DisplayMovieSchedule() const {
+    std::cout << "Screen ID: " << screen_id_ << std::endl;
+    std::cout << "Movie Title: " << movie_title_ << std::endl;
+    std::cout << "Day: " << day_ << std::endl;
+    std::cout << "Date: " << date_ << std::endl;
+    std::cout << "Start Time: " << start_time_ << std::endl;
+    std::cout << "End Time: " << end_time_ << std::endl;
 }

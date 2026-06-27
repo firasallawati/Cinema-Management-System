@@ -1,44 +1,41 @@
-//
-// Created by firas on 15/06/2026.
-//
-
 #ifndef T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H
 #define T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H
 
-
-
-#include <iostream>
 #include <string>
-using namespace std;
 
 class MovieSchedule {
 private:
-    string screen_id_;
-    string movie_title_;
-    string day_;
-    string date_;
-    string start_time_;
-    string end_time_;
+    std::string screen_id_;
+    std::string movie_title_;
+    std::string day_;
+    std::string date_;
+    std::string start_time_;
+    std::string end_time_;
 
 public:
     MovieSchedule();
-    MovieSchedule(string screen_id, string movie_title, string day, string date, string start_time, string end_time);
+    MovieSchedule(const std::string& screen_id,
+                  const std::string& movie_title,
+                  const std::string& day,
+                  const std::string& date,
+                  const std::string& start_time,
+                  const std::string& end_time);
 
-    string GetScreenId();
-    string GetMovieTitle();
-    string GetDay();
-    string GetDate();
-    string GetStartTime();
-    string GetEndTime();
+    std::string GetScreenId() const;
+    std::string GetMovieTitle() const;
+    std::string GetDay() const;
+    std::string GetDate() const;
+    std::string GetStartTime() const;
+    std::string GetEndTime() const;
 
-    void SetScreenId(string screen_id);
-    void SetMovieTitle(string movie_title);
-    void SetDay(string day);
-    void SetDate(string date);
-    void SetStartTime(string start_time);
-    void SetEndTime(string end_time);
+    void SetScreenId(const std::string& screen_id);
+    void SetMovieTitle(const std::string& movie_title);
+    void SetDay(const std::string& day);
+    void SetDate(const std::string& date);
+    void SetStartTime(const std::string& start_time);
+    void SetEndTime(const std::string& end_time);
 
-    void DisplayMovieSchedule();
+    void DisplayMovieSchedule() const;
 };
 
 #endif //T0466146_453_COURSEWORK_REAL_MOVIE_SCHEDULE_H

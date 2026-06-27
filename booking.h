@@ -1,5 +1,5 @@
 //
-// Created by firas on 14/06/2026.
+// booking.h
 //
 
 #ifndef T0466146_453_COURSEWORK_REAL_BOOKING_H
@@ -10,14 +10,13 @@
 #include "movie.h"
 #include "payment_details.h"
 
-using namespace std;
-
 class Booking {
 private:
-    string customer_name_;
+    std::string customer_name_;
     Movie movie_;
-    string booking_date_;   // ex: "2025-06-14" or "Thu"
-    string booking_time_;   // ex: "19:30"
+    std::string screen_id_;      // NEW: link booking to a specific screen
+    std::string booking_date_;   // e.g. "Thursday"
+    std::string booking_time_;   // e.g. "19:30"
     int adult_tickets_;
     int child_tickets_;
     int student_tickets_;
@@ -27,14 +26,23 @@ private:
 
 public:
     Booking();
-    Booking(string customer_name, Movie movie, string booking_date, string booking_time,
-            int adult_tickets, int child_tickets, int student_tickets, int senior_tickets,
-            double total_cost, PaymentDetails payment_details);
+    Booking(const std::string& customer_name,
+            const Movie& movie,
+            const std::string& screen_id,
+            const std::string& booking_date,
+            const std::string& booking_time,
+            int adult_tickets,
+            int child_tickets,
+            int student_tickets,
+            int senior_tickets,
+            double total_cost,
+            const PaymentDetails& payment_details);
 
-    string GetCustomerName() const;
+    std::string GetCustomerName() const;
     Movie GetMovie() const;
-    string GetBookingDate() const;
-    string GetBookingTime() const;
+    std::string GetScreenId() const;
+    std::string GetBookingDate() const;
+    std::string GetBookingTime() const;
     int GetAdultTickets() const;
     int GetChildTickets() const;
     int GetStudentTickets() const;
@@ -42,16 +50,17 @@ public:
     double GetTotalCost() const;
     PaymentDetails GetPaymentDetails() const;
 
-    void SetCustomerName(string customer_name);
-    void SetMovie(Movie movie);
-    void SetBookingDate(string booking_date);
-    void SetBookingTime(string booking_time);
+    void SetCustomerName(const std::string& customer_name);
+    void SetMovie(const Movie& movie);
+    void SetScreenId(const std::string& screen_id);
+    void SetBookingDate(const std::string& booking_date);
+    void SetBookingTime(const std::string& booking_time);
     void SetAdultTickets(int adult_tickets);
     void SetChildTickets(int child_tickets);
     void SetStudentTickets(int student_tickets);
     void SetSeniorTickets(int senior_tickets);
     void SetTotalCost(double total_cost);
-    void SetPaymentDetails(PaymentDetails payment_details);
+    void SetPaymentDetails(const PaymentDetails& payment_details);
 
     int GetTotalTickets() const;
     void DisplayBooking() const;
